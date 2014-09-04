@@ -1,0 +1,267 @@
+--删除公司名称
+--p_delete_company(公司名称或公司的简写名称)
+--return integer; 1 is 成功，0表示失败。
+create or replace function p_delete_company(text) returns integer as
+$$
+  declare
+    v_company_id integer;
+    v_company_relation_sector record; 
+    v_sector record;
+    v_sector_relation_staff record;
+    v_staff_relation_salary record;
+  
+  begin
+
+    v_company_id:=id from company where (name=$1 or simple_name=$1);
+    
+    
+    if(v_company_id is NULL) then
+      return 0;
+    end if;
+    
+    for v_company_relation_sector in select * from company_relation_sector as crs where  crs.company_id=v_company_id loop
+        -- 删除部门
+        for v_sector in select * from sector where id=v_company_relation_sector.sector_id loop
+            -- 删除员工
+            for v_sector_relation_staff in select * from sector_relation_staff where sector_id=v_sector.id loop
+                -- 删除薪水表
+                for v_staff_relation_salary in select * from staff_relation_salary where staff_id=v_sector_relation_staff.staff_id loop
+                    
+                    delete from staff_relation_salary where staff_id=v_staff_relation_salary.id;
+                    if not found then
+                        return 0;
+                    end if;
+                    delete from salary  where id=v_staff_relation_salary.staff_id;
+                    if not found then
+                        return 0;
+                    end if;
+                end loop;
+                
+                delete from staff where id=v_sector_relation_staff.staff_id;
+                if not found then
+                        return 0;
+                end if;
+            end loop;
+            delete from sector_relation_staff where sector_id=v_sector.id ;
+            if not found then
+               return 0;
+            end if;
+            delete from sector where id=v_sector.id;
+            if not found then
+               return 0;
+            end if;
+        end loop;
+    end loop;
+    
+    -- 删除公司与部门表的记录
+    delete from company_relation_sector where company_id=v_company_id;
+    if not found then
+       return 0;
+    end if;
+    
+    -- 删除公司表的数据
+    delete from company where id=v_company_id;
+    if not found then
+       return 0;
+    end if;
+    
+    return 1;
+end;
+$$ language plpgsql;
+    
+    
+--删除部门,把这个部门及其与部门相关的人都删除掉。
+--p_delete_sector(公司名称或公司名称简写,公司部门或公司部门简写)
+--return integer; 1 is 成功，0表示失败。
+create or replace function p_delete_sector(text,text) returns integer as
+$$
+declare
+   v_company_id integer;
+   v_count integer;
+   v_company_relation_sector record;
+   v_sector_relation_staff record;
+   v_staff_relation_salary   record;
+begin
+   v_company_id:=id from company where (name=$1 or simple_name=$1);
+      
+   if(v_company_id is NULL) then
+     return 0;
+   end if;
+   for v_company_relation_sector in select * from company_relation_sector where company_id=v_company_id loop
+       -- 删除部门关系表及其成员
+       for v_sector_relation_staff in select * from sector_relation_staff,sector where sector.id=sector_relation_staff.sector_id and sector_id=v_company_relation_sector.sector_id and (name=$2 or simpele_name=$2) loop
+            if not found then
+            else
+              v_count:=count(*) from  sector_relation_staff where staff_id=v_sector_relation_staff.staff_id;
+              --如果某个人同事在两个部门，只是删除这个人所在部门的连接
+              if(v_count=2) then
+                delete from sector_relation_staff where staff_id=v_sector_relation_staff.staff_id;
+                continue;
+              elsif(v_count=1) then
+                 delete from sector_relation_staff where staff_id=v_sector_relation_staff.staff_id;
+                 delete from staff where id=v_sector_relation_staff.staff_id;
+                 -- 删除薪水表
+                for v_staff_relation_salary in select * from staff_relation_salary where staff_id=v_sector_relation_staff.staff_id loop
+                    
+                    delete from staff_relation_salary where staff_id=v_staff_relation_salary.id;
+                    if not found then
+                        return 0;
+                    end if;
+                    delete from salary  where id=v_staff_relation_salary.staff_id;
+                    if not found then
+                        return 0;
+                    end if;
+                end loop;
+              else 
+              end if;
+              v_count=0;
+            end if;
+       end loop;
+       
+       -- 删除部门表的数据
+       delete from sector where id=v_company_relation_sector.sector_id and (name=$2 or  simple_name=$2);
+       if not found then
+          return 0;
+       end if;
+   end loop;
+   
+   return 1;
+end;
+$$ language plpgsql;
+
+-- 删除公司成员
+-- p_delete_company_staff(公司名称,员工姓名)
+-- return integer;1 is 成功，0表示失败。
+create or replace function p_delete_company_staff(text,text) returns integer as
+$$
+declare
+  v_company_id integer;
+  v_company_relation_sector record;
+  v_sector_relation_staff record;
+  v_staff_relation_salary record;
+ begin
+   v_company_id :=id from company where (name=$1 or simple_name=$1);
+   if(v_company_id is NULL) then
+     return 0;
+   end if; 
+     
+   for v_company_relation_sector in select * from company_relation_sector where company_id=v_company_id loop
+       for v_sector_relation_staff in select * from sector_relation_staff where sector_id=v_company_relation_sector.sector_id loop
+          delete from staff where id=v_sector_relation_staff.staff_id and (name=$2 or en_name=$2);
+          if not found then
+          else
+            -- 删除部门与员工的关联表的记录
+            delete from sector_relation_staff where staff_id=v_company_relation_sector.staff_id;
+            -- 删除薪水表
+            for v_staff_relation_salary in select * from staff_relation_salary where staff_id=v_sector_relation_staff.staff_id loop
+                delete from salary where id=v_staff_relation_salary.salary_id;
+                delete from staff_relation_salary where staff_id=v_sector_relation_staff.staff_id;
+            end loop;
+          end if;
+       end loop;
+   end loop;
+   return 1;
+ end;
+ $$ language plpgsql; 
+ 
+ --删除公司的员工，依据员工的手机号
+ --p_delete_staff(手机号)
+-- return 1 表示成功，0表示失败
+create or replace function p_delete_staff(text) returns integer as
+$$
+declare
+  v_staff_id integer;
+  v_staff_relation_salary record;
+begin
+  v_staff_id:=id from staff where telephone=$1;
+  if(v_staff_id is NULL) then
+  raise exception 'Not Found staff.It is telephone=%',$1;
+  return 0;
+  end if;
+  delete from staff where id=v_staff_id;
+  -- 删除员工薪水
+  for v_staff_relation_salary in select * from staff_relation_salary where staff_id=v_staff_id loop
+      delete from salary where id=v_staff_relation_salary.salary_id;
+      
+  end loop;
+  
+  delete from   staff_relation_salary where staff_id=v_staff_id;
+  delete from sector_relation_staff  where staff_id=v_staff_id;
+  if not found then
+  raise exception 'Delete sector_relation_staff failure!v_staff_id=%',v_staff_id;
+  return 0;
+  end if;
+  
+  return 1;
+end;
+$$ language plpgsql;
+  
+--添加部门
+--p_add_sector(公司名称,部门名称,部门简称,部门描述信息)
+--return integer;1表示添加成功，0表示未成功
+create or replace function p_add_sector(text,text,text,text) returns integer as
+$$
+declare
+  v_company_id integer;
+  v_sector_id integer;
+begin
+  v_company_id:=id from company where (name=$1 or simple_name=$1);
+  if(v_company_id is NULL) then
+   --insert into company(name,simple_name) values($1,$1);
+   --v_company_id:=id from company where (name=$1 or simple_name=$1);
+    raise exception 'company name is not found';
+  end if;
+  insert into sector(name,simple_name,description) values($2,$3,$4);
+  v_sector_id:=id from sector where (name=$2 or simple_name=$3);
+  if(v_sector_id is NULL) then
+  return 0;
+  end if;
+  insert into company_relation_sector(company_id,sector_id) values(v_company_id,v_sector_id);
+  
+  if not found then
+   raise exception 'insert into company_relation_sector(company_id,sector_id) values(%,%);',v_company_id,v_sector_id;
+  end if;
+  
+  return 1;
+end;
+$$ language plpgsql;
+
+-- 添加公司成员
+--p_add_staff(公司名称,公司部门,员工姓名,员工英文名,员工出生日期,
+--员工性别,员工身份证号,员工住址,员工手机号,员工毕业学校,
+--员工的职位头衔)
+--return integer;  1表示添加成功，0表示未成功
+create or replace function p_add_staff(text,text,text,text,text,text,text,text,text,text,text,text) returns integer as
+$$
+declare
+   v_company_id integer;
+   v_sector record;
+   v_sector_id integer;
+   v_staff_id integer;
+   v_tmp integer;
+begin
+
+   v_company_id:=0;
+   v_sector_id:=0;
+   v_tmp:=0;
+   v_company_id:=id from company where (name=$1 or simple_name=$1);
+   if(v_company_id=0) then
+    raise exception 'company is not exist.please check company table.company_name=%',$1;
+   end if;
+   for v_sector in select * from sector  where (name=$2 or simple_name=$2) loop
+    v_sector_id:=sector_id from company_relation_sector where company_id=v_company_id and sector_id=v_sector.id;
+    if(v_sector_id is not NULL ) then
+       insert into staff(name,en_name,birthday,sex,card_id,address,telephone,email,school_name,job_name) values($3,$4,to_date($5,'yyyy-MM-dd'),$6,$7,$8,$9,$10,$11,$12);
+       if not found then
+       raise exception 'insert into staff(name,en_name,birthday,sex,card_id,address,telephone,email,school_name,job_name) values(%,%,%,%,%,%,%,%,%,%);', $3,$4,$5,$6,$7,$8,$9,$10,$11,$12;
+       end if;
+       v_staff_id:=id from staff where card_id=$7;
+       v_tmp:=id from sector_relation_staff where sector_id=v_sector_id and staff_id=v_staff_id;
+       if(v_tmp is NULL) then
+          insert into sector_relation_staff(sector_id,staff_id) values(v_sector_id,v_staff_id);
+       end if; 
+    end if;     
+   end loop;
+   return 1;
+end;
+$$ language plpgsql;  

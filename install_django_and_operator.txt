@@ -1,0 +1,154 @@
+1.安装django
+wget https://www.djangoproject.com/m/releases/1.6/Django-1.6.6.tar.gz
+mkdir -p django/src
+mv   Django-1.6.6.tar.gz django/src
+cd django/src
+tar -xzvf Django-1.6.6.tar.gz
+cd Django-1.6.6
+python setup.py install
+ln -s /usr/local/lib/python2.7/site-packages/django/bin/django-admin.py /usr/local/django-admin.py
+
+2.安装psycopg2
+wget http://initd.org/psycopg/tarballs/PSYCOPG-2-5/psycopg2-2.5.1.tar.gz
+
+tar -xzvf  psycopg2-2.5.1.tar.gz
+cd  psycopg2-2.5.1
+python setup.py install
+
+3.创建项目
+django-admin.py startproject restfulsite
+cd restfulsite
+python manage.py runserver 8080
+
+
+
+4.安装easy_setup   
+官方网址：https://pypi.python.org/pypi/setuptools#downloads
+
+wget  --no-check-certificate https://bootstrap.pypa.io/ez_setup.py -O - | python
+tar   -xzvf djangorestframework-0.3.2.tar.gz
+cd  djangorestframework-0.3.2
+python setup.py install
+
+5.安装django-rest-framework
+git clone   https://github.com/tomchristie/django-rest-framework.git
+cd  django-rest-framework
+python setup.py install
+
+
+
+6.修改settings.py文件中的数据库配置
+如下所示（这是postgresql的配置信息）：
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME':'test_db',
+        'USER':'postgres',
+        'PASSWORD':'postgres',
+        'HOST':'localhost',
+        'PORT':'5432'
+
+    }
+}
+
+
+7.配置安装APPS在settings.py中
+INSTALLED_APPS = (
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'restfulsite',
+)
+
+
+8.生成model（从数据库中生成model对象）
+    python manage.py insepectdb >restfulsite/models.py
+    请参考http://blog.csdn.net/kingmari/article/details/7908153
+    
+9.manage.py的常见应用
+  1.models.py中对象生成sql语句
+  python manage.py sqlall restful
+  2.进入到shell默认，主要用来测试django的相关语句及操作
+  
+10.数据库操作的相关链接
+http://blog.csdn.net/sundaydashu/article/details/7959977
+http://www.iteedu.com/webtech/python/djangocn2/chapter10.php
+
+11.django-web开发中的例子表及相关操作
+  1.表的定义
+    BEGIN;
+    CREATE TABLE "restful_publisher" (
+       "id" serial NOT NULL PRIMARY KEY,
+        "name" varchar(30) NOT NULL,
+        "address" varchar(50) NOT NULL,
+        "city" varchar(60) NOT NULL,
+        "state_province" varchar(30) NOT NULL,
+        "country" varchar(50) NOT NULL,
+       "website" varchar(200) NOT NULL
+    )
+    ;
+    CREATE TABLE "restful_author" (
+        "id" serial NOT NULL PRIMARY KEY,
+        "first_name" varchar(30) NOT NULL,
+        "last_name" varchar(40) NOT NULL,
+        "email" varchar(75) NOT NULL
+    )
+    ;
+    CREATE TABLE "restful_book_authors" (
+        "id" serial NOT NULL PRIMARY KEY,
+        "book_id" integer NOT NULL,
+        "author_id" integer NOT NULL REFERENCES "restful_author" ("id") DEFERRABLE INITIALLY DEFERRED,
+        UNIQUE ("book_id", "author_id")
+    )
+    ;
+    CREATE TABLE "restful_book" (
+        "id" serial NOT NULL PRIMARY KEY,
+        "title" varchar(100) NOT NULL,
+        "publisher_id" integer NOT NULL REFERENCES "restful_publisher" ("id") DEFERRABLE INITIALLY DEFERRED,
+        "publication_date" date NOT NULL
+    )
+    ;
+    ALTER TABLE "restful_book_authors" ADD CONSTRAINT "book_id_refs_id_19dd97e4" FOREIGN KEY ("book_id") REFERENCES "restful_book" ("id") DEFERRABLE INITIALLY DEFERRED;
+    CREATE INDEX "restful_book_authors_book_id" ON "restful_book_authors" ("book_id");
+    CREATE INDEX "restful_book_authors_author_id" ON "restful_book_authors" ("author_id");
+    CREATE INDEX "restful_book_publisher_id" ON "restful_book" ("publisher_id");
+    COMMIT;
+
+  2.相关操作
+
+    from restfulsite.models import Author     
+    author=Author(first_name='ab',last_name='cd',email='ab@google.com')
+    #保存表
+    author.save()
+    author2=Author(first_name='cd',last_name='ef',email='yy@google.com')
+    author2.save()
+    #删除表
+    author2.delete()
+    #更新表
+    author.email='author@google.com'
+    author.save()
+    #打印author
+    author
+    
+    publisher=Publisher(name='ab',address='ab',city='ab')
+    publisher.save();
+    publisher=Publisher(name='cd',address='cd',city='cd')
+    publisher.save();
+    #查询表中所有的记录
+    all=Publisher.objects.all()
+    #打印所有记录
+    all
+    #打印第一条记录
+    all[0]
+    #根据ID号查询表中的记录
+    publisher1=Publisher.objects.get(id=1)
+    publisher1
+
+
+
+
+

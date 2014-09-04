@@ -1,0 +1,95 @@
+--1.公司表
+create table company(
+  id serial,                              --公司表的ID信息
+  name varchar(255) not null,            --公司全名
+  simple_name varchar(60) not null,      --公司简写名称
+  address varchar(255),          --公司地址
+  register_date date,                     --注册日期
+--  ceo_id varchar(255),             --CEO的ID
+  money integer,                          --注册资本
+ -- money_unit varchar(20),      --注册资本的单位（万），可省略，大部分企业的都是以万为单位，好像是国家规定。
+  type varchar(100),       --企业类型
+  description text,      --公司的简要描述信息
+ -- child_id int[] default {0},              --下属企业的ID号
+  other  varchar(255),         --备注信息
+  constraint pk_company_id primary key( id),
+  constraint uq_company_name unique(name),
+  constraint uq_company_simple_name unique(simple_name)
+);
+
+
+--2.公司部门     
+create table sector (
+  id serial,
+  name varchar(255) not null,
+  simple_name varchar(20) not null,
+ -- major_id integer ,      --部门主管ID
+  description text,
+  other varchar(255),  --备注信息
+    constraint pk_sector_id primary key( id)
+);
+--3.公司与部门关系表 ,公司与部门是1对多的关系，可以把这张表去掉，在部门表中添加company_id
+create table company_relation_sector(
+      id serial,
+      company_id integer not null,  --公司ID
+      sector_id integer not null,      --部门ID
+      constraint pk_company_relation_sector_id primary key(id),  
+      constraint fp_company_relation_sector_company_id foreign key(company_id) references company(id),
+      constraint fp_company_relation_sector_sector_id  foreign key(sector_id) references sector(id)
+);
+
+
+--4.公司员工
+create table staff(
+    id serial,
+    name varchar(255) not null,    --员工的姓名，这里不分姓和名，感觉没太必要，如果有人维护数据库，还可以
+    en_name varchar(255), -- 员工的英文名
+    birthday date ,     --出生日期
+    sex   varchar(2) ,
+    card_id varchar(18) not null, --身份证号
+    address  varchar(255),
+    telephone varchar(13) not null,
+    email varchar(60),
+    school_name varchar(255) ,  --毕业学校
+    job_name varchar(100),  --职位头衔
+    constraint pk_staff_id primary key(id),
+    constraint uq_staff_telephone unique(telephone)
+);
+
+--5.部门与员工关系表
+create table sector_relation_staff(
+  id serial,
+  sector_id integer not null,  --部门ID
+  staff_id integer  not null,  --公司成员ID
+  constraint pk_sector_relation_staff_id primary key(id),
+  constraint  fk_sector_relation_staff_sector_id foreign key(sector_id) references sector(id),
+  constraint fk_sector_relation_staff_staff_id foreign key(staff_id) references staff(id)
+);
+
+--6.薪水表
+create  table salary(
+  id serial,
+  true_date date default now(),  --正常工作日
+  figer1 float,  --指标1 
+  money   integer,  --日工资
+  constraint pk_salary_id primary key(id)
+);
+
+--7.员工与薪水关系表
+create table staff_relation_salary(
+  id serial,
+  staff_id integer, --公司成员ID
+  salay_id integer,  --公司成员的薪水ID
+  constraint pk_staff_relation_salary_id primary key(id),
+  constraint fk_staff_relation_salary_staff_id foreign key(staff_id) references staff(id),
+  constraint fk_staff_relation_salary_salay_id foreign key(salay_id) references salary(id)
+);
+
+
+
+--8.创建企业，部门，员工的视图，未加入薪水表
+create or replace view company_sector_staff_view as
+select a.name as company_name,b.name as sector_name,c.name as staff_name,
+c.en_name,c.card_id,c.address,c.telephone,c.email,c.school_name as school,c.sex,c.birthday,c.job_name as job
+ from staff as c,sector_relation_staff as b_c ,sector as b,company_relation_sector as a_b,company as a where
+  a_b.company_id=a.id and a_b.sector_id=b.id and a_b.sector_id=b_c.sector_id and b_c.staff_id=c.id;  

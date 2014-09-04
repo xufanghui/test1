@@ -1,0 +1,74 @@
+-- 数组定义帮助文档
+-- http://www.php100.com/manual/PostgreSQL8/arrays.html
+-- 打印关系表的ID
+create or replace function t_a() returns void as
+$$
+declare
+    a record;
+begin
+    
+    for a in select * from staff_relation_salary loop
+     raise notice 'found is % ',a.id;
+    end loop;
+     
+end;
+$$ language plpgsql;
+
+--只输出一条信息
+create or replace function t_a() returns void as
+$$
+declare
+    a staff_relation_salary%ROWTYPE;
+begin
+    
+    select * into a from staff_relation_salary; 
+     raise notice 'found is % ',a;     
+end;
+$$ language plpgsql;
+
+create or replace function t_a() returns void as
+$$
+declare
+    a record;
+begin
+    
+    for a in select * from staff_relation_salary loop
+     raise notice 'not found is % ',a;
+    end loop;
+    
+     for a in select * from staff loop
+     raise notice 'found is % ',a.id;
+    end loop;
+     
+end;
+$$ language plpgsql;
+
+
+--判断删除是否成功
+create or replace function t_d() returns void as
+$$
+declare
+begin
+  delete from company where id=26;
+  if not found then
+  raise exception 'not found 26';
+  else
+    raise notice 'delete 26 is okay';
+  end if;
+end;
+$$ language plpgsql;
+
+
+-- 判断if的值
+create or replace function if() returns integer as
+$$
+declare
+    b1 integer;
+begin
+  b1:=0;
+  if(b1=0) then
+  raise exception 'B1 is exctpion';
+  end if;
+ return b1;
+end;
+$$ language plpgsql;

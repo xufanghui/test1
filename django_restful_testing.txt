@@ -1,0 +1,15 @@
+测试restful
+#1.查询，带用户名及密码
+curl -H 'Accept: application/json; indent=4' -u root:root http://127.0.0.1:8000/users/
+
+#2.添加记录
+curl -X POST -d username=new -d email=new@example.com -d is_staff=false -H 'Accept: application/json; indent=4' -u root:root http://127.0.0.1:8000/users/
+   
+#3.delete 用户2
+curl -X delete -H 'Accept: application/json; indent=4' -u root:root http://127.0.0.1:8000/users/2/
+
+#4.查询
+curl http://192.168.1.44:8100/user/?1/
+
+#5.更新
+curl -X PUT -d title='django book 2' -d authors=4 -d authors=6  -d publisher=2 -d publication_date=2014-09-24 -H 'Accept: application/json;' http://192.168.1.44:8100/Book/4/

@@ -1,0 +1,26 @@
+安装docutils
+1.下载docutils
+
+wget --no-check-certificate https://pypi.python.org/packages/source/d/docutils/docutils-0.12.tar.gz#md5=4622263b62c5c771c03502afa3157768
+
+
+2.安装docutils
+tar -xzvf docutils-0.12.tar.gz
+cd docutils-0.12
+python setup.py install
+
+3.下面可看到安装的docutils包
+
+changing mode of /usr/local/bin/rst2xml.py to 755
+changing mode of /usr/local/bin/rstpep2html.py to 755
+changing mode of /usr/local/bin/rst2pseudoxml.py to 755
+changing mode of /usr/local/bin/rst2man.py to 755
+changing mode of /usr/local/bin/rst2html.py to 755
+changing mode of /usr/local/bin/rst2odt.py to 755
+changing mode of /usr/local/bin/rst2odt_prepstyles.py to 755
+changing mode of /usr/local/bin/rst2s5.py to 755
+changing mode of /usr/local/bin/rst2latex.py to 755
+changing mode of /usr/local/bin/rst2xetex.py to 755
+
+4.简单的介绍和帮助，请看下列链接
+http://blog.csdn.net/jiyucn/article/details/2157572
