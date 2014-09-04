@@ -13,7 +13,7 @@
       2.django_table_1tomany_and_manyTomany.txt
       
   4.一些安装步骤的记录等
-      1.install_postgresql 9.1.txt
+      1.install_postgresql_9.1.txt
       2.install_docutils.txt
   
   5.其它
