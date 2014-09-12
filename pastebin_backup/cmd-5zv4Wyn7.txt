@@ -1,1 +1,0 @@
-cmd /K start cd /D "E:\eclipse_workspace\jinan\src\com\libovito\resource"
