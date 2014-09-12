@@ -1,0 +1,17 @@
+序号	命令	注释	
+1	rm	删除	
+2	cp	复制	
+3	mv	移动	
+4	ls	列表	
+5	grep	搜索字符串	
+6	find	查找	
+7	chmod	修改权限	
+8	chown	修改所有者	
+9	adduser	添加用户	
+10	passwd	修改用户密码	
+11	tar	解压或打包软件包	
+12	rpm	rpm包安装	
+13	|	管道	
+14	unzip	解压zip包	
+15	vi	vi编辑器	
+16	>	重定向

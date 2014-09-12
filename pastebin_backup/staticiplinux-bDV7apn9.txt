@@ -1,0 +1,20 @@
+1.修改/etc/network/interfaces文件，用vi编辑器打开，输入如下命令并回车：
+vi /etc/network/interfaces
+
+2.进入vi插入模式，按i键，修改成如下内容：
+	1. dhcp改为static
+	2. 添加下列行
+		address 192.168.242.34
+		gateway 192.168.242.33
+		netmask 255.255.255.0
+		network 192.168.242.0
+		broadcast 192.168.242.255
+
+
+3.保存修改后的/etc/network/interfaces文件。
+	1.按ESC键
+	2.按Shift+分号键
+	3.输入x,保存退出
+
+4.重启网卡，输入如下命令并回车
+	ifdown eth0&&ifup eth0

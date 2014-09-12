@@ -1,0 +1,1 @@
+sshpass -p 123456 ssh test@127.0.0.1

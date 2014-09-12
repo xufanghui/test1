@@ -1,0 +1,7 @@
+yum install 软件包名
+bunzip2   压缩的文件包
+tar -xzvf 压缩的文件包
+rpm -ivh 软件包名
+
+EDITOR=vi;
+export EDITOR

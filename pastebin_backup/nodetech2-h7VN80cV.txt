@@ -1,0 +1,7 @@
+网站：http://yaha.me/
+技术架构：
+1.前端采用AngularJS 
+2. 前端通过AngularJS的Http的API访问后端的REST数据 
+3. 后端用Deployd实现，其为基于NodeJS的一个REST系统 
+4. 实际实现过程中，有写自己定制的AngularJS Directive filter及其他一些代码
+5. 后端的Deployd也有深入定制其核心代码，但不多。似乎Deployd官方最近都没怎么更新。

@@ -1,0 +1,168 @@
+<%
+' Asp 防御CC攻击模块 (Anti-CC)
+' Author: Nuclear'Atk
+' Creation Date: 2011-12-24 11:55:44
+' Last Updated: 2012-6-13 10:13:20
+
+Dim TimeOut, Interval, Anti_CC, IP0, IP1, BrowX, User
+
+TimeOut = 900                                                                   '超时时间(秒)
+Interval = 1                                                                    '最短刷新间隔(秒)
+CC_Max = 10                                                                     '临界值(次)
+
+IP0 = Request.ServerVariables("REMOTE_ADDR")                                    '客户端代理 IP
+IP1 = GetForwarded                                                              '绕过代理获取客户端真实 IP (判断用户是否使用了 Http 代理)
+BrowX = Replace(Request.ServerVariables("HTTP_USER_AGENT"), vbCrLf, "")         '客户端浏览器信息
+
+Application.Lock
+If IsEmpty(Application(IP0)) Then                                               '用户第一次访问
+    Application(IP0) = IP1 & vbCrLf & _
+                "0" & vbCrLf & _
+                Now & vbCrLf & _
+                Now & vbCrLf & _
+                BrowX & vbCrLf & _
+                GetFullUrl()
+    '添加用户信息格式：IP = (绕过代理获取的IP) (阈值) (首次访问) (最后访问) (用户信息) (访问网址)
+Else                                                                            '非第一次访问
+    User = Split(Application(IP0), vbCrLf)                                      '提取当前用户数据，并分割为数组
+    If Int(User(1)) >= CC_Max Then                                              '是否被封
+        If DateDiff("S", User(3), Now) >= Int(User(1)) Then                     '判断是否需要解封
+            User(1) = "0"
+            User(3) = Now
+            SaveToApp User                                                      '保存数据
+        Else
+            User(1) = Int(User(1)) + 1                                          '累加被封时间
+            SaveToApp User                                                      '保存数据
+            BanIPMsg (User(1) - DateDiff("S", User(3), Now))                    '计算解封剩余时间并显示被封信息
+        End If
+    Else
+        If DateDiff("S", User(3), Now) <= Interval Then                         '判断访问间隔
+            User(1) = Int(User(1)) + 1                                          '临界值+1
+        Else
+            If Int(User(1)) < 1 Then                                            '处理负数
+                User(1) = 0
+            Else
+                User(1) = Int(User(1)) - 1                                      '临界值-1
+            End If
+        End If
+        User(3) = Now                                                           '刷新最后访问时间
+        SaveToApp User                                                          '保存数据
+    End If
+End If
+For Each Anti_CC In Application.Contents                                        '遍历清理超时的用户
+    User = Split(Application(Anti_CC), vbCrLf)                                  '提取用户数据，并分割为数组
+    If UBound(User) = 5 Then
+        If DateDiff("S", User(2), Now) >= TimeOut Then                          '超时则销毁变量 ' And Int(User(0))<CC_Max
+            Application.Contents.Remove (Anti_CC)
+        End If
+    End If
+Next
+Application.Unlock
+
+If Request("cc") = "showuser" Then ShowUserList                                 '特权功能：显示在线用户
+
+'-------------------------------------------------------------------------------
+
+Function GetForwarded()
+    '绕过代理获取真实IP
+    Dim Tmp
+    Tmp = Request.ServerVariables("HTTP_X_FORWARDED_FOR")
+    If Len(Tmp) > 0 Then
+        GetForwarded = Replace(Tmp, vbCrLf, "")
+    Else
+        GetForwarded = Request.ServerVariables("REMOTE_ADDR")
+    End If
+End Function
+
+Function GetFullUrl()
+    '获取完整URL地址
+    If Request.QueryString <> "" Then
+        GetFullUrl = "http://" & Request.ServerVariables("HTTP_HOST") & Request.ServerVariables("SCRIPT_NAME") & "?" & Request.QueryString
+    Else
+        GetFullUrl = "http://" & Request.ServerVariables("HTTP_HOST") & Request.ServerVariables("SCRIPT_NAME")
+    End If
+    GetFullUrl = Replace(GetFullUrl, vbCrLf, "")
+End Function
+
+Function SaveToApp(Data)
+    '保存数据到内存
+    Application(IP0) = IP1 & vbCrLf & Data(1) & vbCrLf & Data(2) & vbCrLf & User(3) & vbCrLf & BrowX & vbCrLf & GetFullUrl()
+End Function
+
+Function BanIPMsg(LeftTime)
+    'IP 被封时显示的信息
+    Response.Clear
+%>
+<p>警告：</P>
+<p style="text-indent:2em;">你的访问频率太快，请不要快速刷新页面或者尝试 CC 攻击！</P>
+<p style="text-indent:2em;">你的 IP 地址将于 <span style="color: #FF0000" id="tick"><%=LeftTime%></span> 秒后解封，在此期间你不能访问本站任何页面，届时本页面会自动刷新！</P>
+<script type="text/javascript">
+    var i = <%=LeftTime%>;
+    var intervalid;
+    intervalid = setInterval("fun()", 1000);
+    function fun() {
+        if (i == 0) {
+            clearInterval(intervalid);
+            location.reload()
+        }
+        document.getElementById("tick").innerHTML = i;
+        i--
+    }
+</script>
+<script>alert('你的访问频率太快，请不要快速刷新页面或者尝试CC攻击！')</script>
+<%
+    Response.End
+End Function
+
+Function ShowUserList()
+    Response.Clear
+    Response.Write "<meta http-equiv='refresh' content='20'>" & vbCrLf & _
+                   "<body bgcolor='#000000' style='font-size:12px;font-family: Fixedsys;'>" & vbCrLf & _
+                   "<table style='font-size:12px;text-indent:2px;' width='100%' border='1' cellspacing='0' bordercolor='#000000' cellpadding='1'>" & vbCrLf & _
+                       "<tr bgColor='#ACD6FF'>" & _
+                       "<TD width='100'>代理 IP</TD>" & _
+                       "<TD width='100'>真实 IP</TD>" & _
+                       "<TD width='30' align='center'>阈值</TD>" & _
+                       "<TD width='130' align='center'>首次访问</TD>" & _
+                       "<TD width='130' align='center'>最后访问</TD>" & _
+                       "<TD>用户信息</TD>" & _
+                       "<TD>访问网址</TD>" & _
+                   "</tr>" & vbCrLf
+    Dim TrColor
+    For Each Anti_CC In Application.Contents                                    '遍历清理超时的用户
+        User = Split(Application(Anti_CC), vbCrLf)                              '提取用户数据，并分割为数组
+        If UBound(User) = 5 Then                                                '判断数据格式是否正确
+            If TrColor = "#5CADAD" Then                                         '表格自动换色
+                TrColor = "#95CACA"
+            Else
+                TrColor = "#5CADAD"
+            End If
+            IF Anti_CC <> User(0) Or Int(User(1)) >= CC_Max Then                '高亮显示使用代理、已被屏蔽的用户
+                TrColor = "#FF9797"
+            End IF
+            Response.Write "<tr bgColor='" & TrColor & "' onmouseover=""this.bgColor='#D1E9E9';"" onmouseout=""this.bgColor='" & TrColor & "';"">" & _
+                               "<TD>" & Anti_CC & "</TD>" & _
+                               "<TD>" & Server.HtmlEncode(User(0)) & "</TD>" & _
+                               "<TD align='center'>" & User(1) & "</TD>" & _
+                               "<TD align='center'>" & User(2) & "</TD>" & _
+                               "<TD align='center'>" & User(3) & "</TD>" & _
+                               "<TD>" & Server.HtmlEncode(User(4)) & "</TD>" & _
+                               "<TD>" & Server.HtmlEncode(User(5)) & "</TD>" & _
+                           "</tr>" & vbCrLf
+        Else                                                                    '错误的数据
+            Response.Write "<tr bgColor='#CE0000'>" & _
+                               "<TD>" & Anti_CC & "</TD>" & _
+                               "<TD align='center'>Null</TD>" & _
+                               "<TD align='center'>Null</TD>" & _
+                               "<TD align='center'>Null</TD>" & _
+                               "<TD align='center'>Null</TD>" & _
+                               "<TD>Null</TD>" & _
+                               "<TD>Error: " & Application(Anti_CC) & "</TD>" & _
+                           "</tr>" & vbCrLf
+        End If
+    Next
+    Response.Write "</table>" & vbCrLf & _
+                   "</body>"
+    Response.End
+End Function
+%>

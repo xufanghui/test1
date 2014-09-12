@@ -1,0 +1,51 @@
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.imageio.ImageIO;
+import javax.servlet.ServletException;
+
+
+import org.geoserver.platform.ServiceException;
+import org.geoserver.wms.GetMapRequest;
+
+import org.geoserver.wms.MapLayerInfo;
+import org.geoserver.wms.WMSMapContext;
+import org.geoserver.wms.WebMap;
+import org.geoserver.wms.map.RenderedImageMap;
+import org.geotools.data.FeatureSource;
+import org.geotools.factory.CommonFactoryFinder;
+import org.geotools.factory.GeoTools;
+import org.geotools.feature.FeatureCollection;
+import org.geotools.feature.FeatureIterator;
+import org.geotools.styling.FeatureTypeConstraint;
+import org.geotools.util.logging.Logging;
+import org.opengis.feature.Feature;
+import org.opengis.feature.Property;
+import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.feature.type.FeatureType;
+import org.opengis.feature.type.GeometryDescriptor;
+import org.opengis.filter.Filter;
+import org.opengis.filter.FilterFactory;
+
+import com.vividsolutions.jts.geom.Point;
+import com.xoomcode.acidmaps.adapter.JCAdapter;
+import com.xoomcode.acidmaps.cache.DatasetCache;
+import com.xoomcode.acidmaps.cache.DatasetCacheKey;
+import com.xoomcode.acidmaps.constants.ErrorConstants;
+import com.xoomcode.acidmaps.core.AcidMapParameters;
+import com.xoomcode.acidmaps.core.Bounds;
+import com.xoomcode.acidmaps.core.Color;
+import com.xoomcode.acidmaps.core.Configuration;
+import com.xoomcode.acidmaps.error.AcidMapException;
+import com.xoomcode.acidmaps.error.ErrorImageFactory;
+import com.xoomcode.acidmaps.error.Validator;

@@ -1,0 +1,42 @@
+jsp servlet
+pageContext
+appliction(可以获得webconfig信息)
+如：application.getInitParameter("driver")  它的这些配置在web.xml中
+<context-param>
+	<param-name>driver</param-name>
+	<param-value>com.mysql.jdbc.Driver</param-value>
+</context-param>
+
+session
+page
+exception
+out
+request
+request.getQueryString()
+java.net.URLDecoder
+request.getRequestDispatcher("/a.jsp").forward(request,response);
+
+BufferedImage
+Graphics
+ImageIO.write(image,"bmp",response.getOutputStream())
+response
+response.sendRedirect("/a.jsp")
+cookie
+request.getCookies()
+
+自定义标签
+1、extends SimpleTagSupport
+
+2、在src文件下写相应的tld文件
+
+3、在jsp页面中引入此文件
+
+
+Filter接口过滤
+1.编写实现Filter的类
+2.在web.xml配置Filter类
+
+Listener类
+1.编写实现ServletContextListener接口
+2.在web.xml配置Listener
+主要用来配置数据库的初始化信息

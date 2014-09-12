@@ -1,0 +1,1 @@
+ more auth.log|grep sshd|grep "50.116.43.176" |grep "Accepted"|wc -l

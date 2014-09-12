@@ -1,0 +1,21 @@
+mkdir git
+cd git
+git init
+touch readme.txt
+git add readme.txt
+git commit -m "init git and readme.txt"
+git remote add origin https://github.com/test/test1
+git push origin master
+touch 1.txt
+touch 2.txt
+git add *.txt
+git commit -m "test commit *.txt "
+git push origin master
+git rm 2.txt
+git commit -m "delete 2.txt "
+git push origin master
+
+sed '1 i hello git ' readme.txt >readme.txt
+git add readme.txt
+git commit -m "modify readme.txt"
+git push origin master

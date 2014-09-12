@@ -1,0 +1,1 @@
+ ogr2ogr -f 'ESRI Shapefile' -t_srs EPSG:900913 a/yangzhou_grid_1km_900913.shp yangzhou_grid_1km.shp

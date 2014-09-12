@@ -1,0 +1,103 @@
+Linux压缩文件的读取
+
+·    *.Z       compress 程序压缩的档案；
+·    *.bz2     bzip2 程序压缩的档案；
+·    *.gz      gzip 程序压缩的档案；
+·    *.tar     tar 程序打包的数据，并没有压缩过；
+·    *.tar.gz  tar 程序打包的档案，其中并且经过 gzip 的压缩！
+·    *.zip     zip 程序压缩文件
+·    *.rar     rar 程序压缩文件
+Compress压缩文件
+
+[root@test /root]# cp /etc/man.config /root 
+[root@test /root]# compress man.config //压缩man.config这个文件
+[root@test /root]# compress -d man.config.Z  //-d 解压缩这个文件
+[root@test /root]# uncompress man.config.Z  //解压缩这个文件
+当你以 compress 压缩之后，如果没有下达其它的参数，那么原本的档案就会被后来的 *.Z 所取代！
+Gzip压缩文件和zcat
+
+[root@test /root]# gzip [-d#] filename <==压缩与解压缩 
+[root@test /root]# zcat filename.gz     <==读取压缩档内容 
+参数说明：  
+-d  ：解压缩的参数！ 
+-r  ：递归处理，将指定目录下的所有文件及子目录一并处理
+-#  ：压缩等级， 1 最不好， 9 最好， 6 是默认值！
+[root@test /root]# gzip man.config   //会产生 man.config.gz 这个档案 
+[root@test /root]# zcat man.config.gz //会读取出 man.config 的内容
+[root@test /root]# gzip -d man.config.gz  
+[root@test /root]# gunzip man.config.gz 
+解压缩，产生 man.config 这个档案
+[root@test /root]# gzip -9 man.config  //以最大压缩比压缩 testing 这个档案！
+[root@test /root]# gzip -r filename.gz file1 file2 file3 /usr/work/school 
+//file1、file2、 file3、以及 /usr/work/school 目录的内容（假设这个目录存在）压缩起来，然后放入 filename.bz2 文件中
+Bzip2压缩文件和bzcat
+
+[root@test /root]# bzip2 [-dz] filename <==压缩解压缩指令 
+[root@test /root]# bzcat filename.bz2   <==读取压缩文件内容指令 
+参数说明： 
+-d  ：解压缩的意思！ 
+-z  ：压缩的意思！ 
+范例： 
+同样的，我们以刚刚拷贝过来的 /root/man.config 这个档案为例 
+[root@test /root]# bzip2 –z man.config 
+[root@test /root]# bzcat man.config.bz2 
+[root@test /root]# bzip2 –d man.config.bz2 
+[root@test /root]# bunzip2 man.config.bz2
+[root@test /root]# bzip2 filename.bz2 file1 file2 file3 /usr/work/school  
+//file1、file2、 file3、以及 /usr/work/school 目录的内容（假设这个目录存在）压缩起来，然后放入 filename.bz2 文件中
+Tar压缩文件
+
+[root@test /root]# tar [-zxcvfpP] filename  
+[root@test /root]# tar -N 'yyyy/mm/dd' /path -zcvf target.tar.gz source  
+参数说明：  
+-z  ：是否同时具有 gzip 的属性？  
+-x  ：解开一个压缩档案的参数指令！  
+-t  ：查看 tarfile 里面的档案！ 
+-c  ：建立一个压缩档案的参数指令  
+-v  ：压缩的过程中显示档案！  
+-f  ：使用档名，请留意，在 f 之后要立即接档名喔！不要再加参数！ 
+　　　例如使用『 tar -zcvfP tfile sfile』就是错误的写法，要写成 
+　　　『 tar -zcvPf tfile sfile』才对喔！ 
+-p  ：使用原档案的原来属性（属性不会依据使用者而变）  
+-P  ：可以使用绝对路径  
+-N  ：比后面接的日期(yyyy/mm/dd)还要新的才会被打包进新建的档案中！  
+--exclude FILE：在压缩的过程中，不要将 FILE 打包！  
+范例：  
+[root@test /root]# tar -cvf directory.tar directory 
+//只将目录整合打包成一个档案 
+[root@test /root]# tar -zcvf directory.tar.gz directory  
+除了将目录打包外，同时以 gzip 压缩 
+[root@test /root]# tar -zcvf filename.tar.gz  /home/test/*  
+将 /home/test/ 这个目录下的档案全部打包并压缩成为一个 filename.tar.gz 的档案
+[root@test /root]# tar -jcvf /tmp/etc.tar.bz2 /etc <==打包后，以 bzip2 压缩
+[root@test /root]# tar -xvf  directory.tar  
+解 tar 的封包，请注意，由于没有 gzip (.tar 而非 .tar.gz) 的作用，所以只要使用 –xvf 即可！不需要加上 z ，否则会显示有问题！
+[root@test /root]# tar -zxvf directory.tar.gz  
+这个就是有加上 gzip 的压缩的结果！所以需要加上 –z 呦！
+[root@test /root]# tar –ztvf directory.tar.gz 
+这个 t 可以用来查看 tar 里面的档案信息呢！而不需要将他解开！
+[root@test /root]# tar -zcvPf home.tar.gz /home  
+则建立起来的压缩档内档案为绝对路径  
+请注意，使用这个 P 的参数时，不要将 P 加在 f 后面，因为 
+f 之后要立即接档名才行喔！
+[root@test /root]# tar -N '2002/06/25' -zcvf home.tar.gz /home  
+上面是说 在 /home 这个目录中，比 2002/06/25 日还要新的档案才会被打包进入 home.tar.gz 这个档案中！ 
+[root@test /root]# tar -zcvf host.tar.gz / --exclude /mnt --exclude /proc  
+上面是说，将根目录的所有数据都打包进 host.tar.gz 这个档案中，但是 /mnt 及 /proc 则不打包！ 
+[root@test /root]# tar -cvf - /home | tar -xvf - 
+上面的意思是『将 /home 打包之后，直接解压缩在 /root 底下！』嘿嘿！不需要再建立一次中间档案！不过，使用上面的语法最好使用『绝对路径』，比较不会有问题！这个方式适合不想要建立中间档案时！
+Zip和unzip压缩文件
+
+[root@test /root]# zip -r myfile.zip ./*  //将当前目录下的所有文件和文件夹全部压缩成myfile.zip文件,－r表示递归压缩子目录下所有文件.
+[root@test /root]# zip -d myfile.zip smart.txt  //删除压缩文件中smart.txt文件
+[root@test /root]# zip -m myfile.zip ./rpm_info.txt //向压缩文件中myfile.zip中添加rpm_info.txt文件
+ 
+[root@test /root]# unzip -o -d /home/sunny myfile.zip //把myfile.zip文件解压到 /home/sunny/
+Rar压缩文件
+
+现在网上多数压缩包是rar格式的，所以需要一个rar工具。
+首先在http://www.rarlab.com/download.htm下载RAR 3.60 beta 6 for Linux
+我解压到/opt下，会自动建立rar目录。这个工具无需编译可以直接使用。
+在$HOME目录下建立bin目录。
+在bin目录中建立一个链接。ln -s /opt/rar/rar rar。
+就可以用rar工具压缩和解压.rar文件了。不过此工具是命令方式的，和在DOS下的RAR操作是一样的。

@@ -1,0 +1,61 @@
+1.安装hdf5类库
+yum install hdf5.i386 hdf5-devel.i386
+
+2.下载并安装python2.6
+wget http://www.python.org/ftp/python/2.6.6/Python-2.6.6.tar.bz2
+./configure --prefix=/usr/local
+make
+make install
+ln -s /usr/local/bin/python  /usr/bin/python26
+
+3.下载并安装numpy linux 版
+地址：http://sourceforge.net/projects/numpy/files/NumPy/1.6.2/numpy-1.6.2.tar.gz/download
+gunzip -d numpy-1.6.2.tar.gz
+tar -xf numpy-1.6.2.tar
+cd numpy-1.6.2
+python26 setup.py build
+python26 setup.py install
+
+4.下载并安装h5py
+地址：
+https://h5py.googlecode.com/files/h5py-2.0.1.tar.gz
+gupzip -d h5py-2.0.1.tar.gz
+tar -xf h5py-2.0.1.tar
+cd h5py-2.0.1
+python26 setup.py build
+python26 setup.py install
+
+5.下载并安装gdal库
+
+wget http://download.osgeo.org/gdal/gdal191.zip
+unzip gdal191.zip
+cd gdal-1.9.1
+./configure
+make
+make install
+验证输入：gdalinfo  看是否有帮助信息，有则安装正确
+
+6.下载并安装python gdal库
+下载地址：http://pypi.python.org/packages/source/G/GDAL/GDAL-1.9.0.tar.gz#md5=415d043044e3c9616f80b69b95a8540d
+gunzip -d GDAL-1.9.0.tar.gz
+tar -xf GDAL-1.9.0.tar
+cd GDAL-1.9.0
+python26 setup.py build
+python26 setup.py install
+测试是否安装成功
+python26
+from osgeo import gdal
+没有错误提示就是正确
+如：Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/usr/local/lib/python2.6/site-packages/osgeo/__init__.py", line 21, in <module>
+    _gdal = swig_import_helper()
+  File "/usr/local/lib/python2.6/site-packages/osgeo/__init__.py", line 17, in swig_import_helper
+    _mod = imp.load_module('_gdal', fp, pathname, description)
+ImportError: libgdal.so.1: cannot open shared object file: No such file or directory
+有这样的提示。
+解决方法：
+find / -name "libgdal.so.1"
+找到路径如：/usr/local/lib/libgdal.so.1
+在/etc/ld.so.conf的后面添加/usr/local/lib,保存，退出
+最后输入ldconfig，重新加载类库

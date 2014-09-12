@@ -1,0 +1,5 @@
+ftp -n 192.168.1.201 <<-end
+user root 123456
+bin
+rmdir testone
+end

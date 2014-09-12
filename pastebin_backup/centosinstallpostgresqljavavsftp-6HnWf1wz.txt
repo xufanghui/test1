@@ -1,0 +1,40 @@
+yum install postgresql84.i386       //install to /usr/bin/postgresql /usr/share/pgsql   /var/lib/pgsql/data
+yum install postgresql84.i386 postgresql84-contrib.i386 postgresql84-devel.i386 postgresql84-libs.i386 postgresql84-server.i386
+yum install java-1.6.0-openjdk.i386
+yum install java-1.6.0-openjdk-devel.i386
+bzip2 -d *.bz2
+tar -xf *.tar
+
+apachectl -version
+Server version: Apache/2.2.3 
+Server built:   Feb 23 2012 21:16:57     /etc/httpd  /var/module  /var/run   /var/log/https
+
+
+yum install vsftpd.i386
+设置vsftpd
+在e:\vsftp目录下
+注意：
+ftpuser 是拒绝访问的用户
+user_list 是可以用ftp的用户
+chroot_list 是可以浏览整个系统的用户
+vsftpd.conf 中添加的语句有：
+#用户列表
+userlist_enable=YES
+userlist_deny=NO
+userlist_file=/etc/vsftpd/user_list
+
+#日志文件
+dual_log_enable=YES
+vsftpd_log_file=/var/log/vsftpd.log
+#anonymous用户可以读写
+anon_other_write_enable=YES
+
+mkdir  /var/ftp/upload
+chown ftp /var/ftp/upload
+setsebool -P allow_ftpd_anon_write=1
+setsebool -P allow_ftpd_full_access=1
+参考网站：http://linux.vbird.org/linux_server/0410vsftpd.php
+
+#安装hdf5库
+yum install hdf5.i386 hdf5-devel.i386
+yum install python-numpy.i386

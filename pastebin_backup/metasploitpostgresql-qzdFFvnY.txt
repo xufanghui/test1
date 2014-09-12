@@ -1,0 +1,10 @@
+gem install activerecord-postgresql-adapter
+
+gem install pg
+[*] exec: gem install pg
+
+Building native extensions.  This could take a while...
+Successfully installed pg-0.13.2
+1 gem installed
+Installing ri documentation for pg-0.13.2...
+Installing RDoc documentation for pg-0.13.2...

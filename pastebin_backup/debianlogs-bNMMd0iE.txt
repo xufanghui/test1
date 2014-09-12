@@ -1,0 +1,2 @@
+more /dev/xconsole
+显示启动信息

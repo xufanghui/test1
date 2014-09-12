@@ -1,0 +1,8 @@
+1.install xming
+2.putty set
+localhost:0.0
+3.startx
+error tips:
+Errors from xkbcomp are not fatal to the X server
+ 
+4.find / -name "*xkbcomp"

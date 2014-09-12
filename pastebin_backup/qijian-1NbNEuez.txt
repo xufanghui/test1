@@ -1,0 +1,8 @@
+dac0832(8bit) 数/模转换
+max232     电平转换
+op07       单运放
+tl061		单运放
+http://item.taobao.com/item.htm?spm=a1z0k.1000775.1.38&id=17509836944
+http://s.taobao.com/search?q=MK802&commend=all&ssid=s5-e&search_type=item&sourceId=tb.index&initiative_id=tbindexz_20120904
+http://www.goosh.org/
+http://s.taobao.com/search?q=%BC%A4%B9%E2%B7%A2%C9%E4%C6%F7&initiative_id=staobaoz_20120904&suggest_query=%BC%A4%B9%E2%B7%A2%C9%E4%C6%F7&sb_id=20&suggest=0_2&source=suggest&wq=%BC%A4%B9%E2fa

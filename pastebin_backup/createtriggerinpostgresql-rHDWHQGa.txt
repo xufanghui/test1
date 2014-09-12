@@ -1,0 +1,21 @@
+CREATE TABLE geometries
+(
+  name character varying,
+  geom geometry
+)；
+CREATE TABLE geometries1
+(
+  name character varying,
+  geom geometry
+)；
+CREATE or Replace FUNCTION func_geom_insert() RETURNS trigger AS $func_geom_insert$  
+    BEGIN  
+        If (TG_OP = 'INSERT') THEN         
+ 	   
+            INSERT INTO geometries1(name,geom) values(NEW.name,NEW.geom);  
+        END IF;          
+        return null;  
+    END;  
+$func_geom_insert$ LANGUAGE plpgsql;  
+CREATE TRIGGER t_insert_2_table AFTER INSERT ON geometries  
+    FOR EACH ROW EXECUTE PROCEDURE func_geom_insert();

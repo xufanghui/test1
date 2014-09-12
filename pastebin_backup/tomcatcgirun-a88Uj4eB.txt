@@ -1,0 +1,28 @@
+
+type Exception report
+
+message
+
+description The server encountered an internal error () that prevented it from fulfilling this request.
+
+exception
+
+java.io.IOException: Cannot run program "E:\eclipse_workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp2\wtpwebapps\yz_airinform_web\WEB-INF\cgi\proxy.cgi" (in directory "E:\eclipse_workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp2\wtpwebapps\yz_airinform_web\WEB-INF\cgi"): CreateProcess error=193, %1 ²»ÊÇÓÐЧµÄ Win32 ӦÓó
+	java.lang.ProcessBuilder.start(Unknown Source)
+	java.lang.Runtime.exec(Unknown Source)
+	org.apache.catalina.servlets.CGIServlet$CGIRunner.run(CGIServlet.java:1647)
+	org.apache.catalina.servlets.CGIServlet.doGet(CGIServlet.java:609)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:707)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:820)
+root cause
+
+java.io.IOException: CreateProcess error=193, %1 ²»ÊÇÓÐЧµÄ Win32 ӦÓó
+	java.lang.ProcessImpl.create(Native Method)
+	java.lang.ProcessImpl.<init>(Unknown Source)
+	java.lang.ProcessImpl.start(Unknown Source)
+	java.lang.ProcessBuilder.start(Unknown Source)
+	java.lang.Runtime.exec(Unknown Source)
+	org.apache.catalina.servlets.CGIServlet$CGIRunner.run(CGIServlet.java:1647)
+	org.apache.catalina.servlets.CGIServlet.doGet(CGIServlet.java:609)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:707)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:820)

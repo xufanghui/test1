@@ -1,0 +1,18 @@
+设置linux的共享内存
+[root@neirongroot]# echo 1073741824 > /proc/sys/kernel/shmmax
+ 
+ 
+ 
+[root@neirongroot]# more /proc/sys/kernel/shmmax
+ 
+ 
+ 
+1073741824这里设为1G。
+ 
+ 
+ 
+对于shmmax文件的修改，系统重新启动后会复位。可以通过修改/etc/sysctl.conf使更改永久化。
+ 
+ 
+ 
+　　在该文件内添加以下一行    kernel.shmmax = 1073741824 这个更改在系统重新启动后生效.

@@ -1,0 +1,22 @@
+css 样式总结
+1.css嵌入的方式
+   1.直接在网页中写
+   2.link引入
+   3.@import 导入
+
+2.应用规则
+   1.优先顺序
+   直接写在行内》id样式》class样式》（h1,h2,h3）标签样式
+   2.样式子继承 p #main{}
+   3.样式相交  p.#main,p.center{}
+   4.样式合并 
+   
+3.盒子模式
+border-color,border-style:[none,hidden,dotted,groove],border-width
+padding 1 2 3 4参数的含义
+padding-top,padding-right,padding-bottom,padding-left
+margin-top,margin-right,margin-bottom,margin-left
+max-width,min-height
+
+4.div与span的区别
+5.div塌陷

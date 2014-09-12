@@ -1,0 +1,33 @@
+BT5中配置蜜罐
+1.配置的网段为192.168.1.0/24
+farpd 192.168.1.0/24
+2.配置honeyd.conf文件
+create windows
+set windows personality "Microsoft Windows NT 4.0 SP3"
+set windows default tcp action reset
+set windows default udp action reset
+set windows default icmp action open
+add windows tcp port 139 open
+add windows udp port 137 open
+add windows tcp port 137 open
+add windows tcp port 110 open
+add windows tcp port 80 open
+add windows tcp port 25 open
+add windows tcp port 22 open
+add windows tcp port 21 open
+bind 192.168.1.115 windows
+bind 192.168.1.114 windows
+bind 192.168.1.116 windows
+
+3.创建日志文件
+mkdir /var/log/honeyd
+touch /var/log/honeyd/service.log
+touch /var/log/honeyd/honeyd.log
+chmod 777 /var/log/honeyd/*
+
+4.运行honeyd
+ honeyd -d -p /usr/local/share/honeyd/nmap.prints -l /var/log/honeyd/honeyd.log -s /var/log/honeyd/service.log -f /etc/honeyd.conf 192.168.1.114-192.168.1.116
+5.测试环境在另一个主机上，而不是虚拟机上。在虚拟机上测试出现问题，请看原因：http://www.honeyd.org/phpBB2/viewtopic.php?t=462
+主机IP:192.168.1.100
+ping 192.168.1.114
+ping 192.168.1.115

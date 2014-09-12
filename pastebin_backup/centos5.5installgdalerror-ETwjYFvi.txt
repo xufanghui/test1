@@ -1,0 +1,34 @@
+[root@localhost h5py-2.0.1]# yum install gdal.i386 gdal-devel.i386
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * rpmforge: ftp.riken.jp
+Setting up Install Process
+Resolving Dependencies
+--> Running transaction check
+---> Package gdal.i386 0:1.4.4-2.el5.rf set to be updated
+--> Processing Dependency: libgeos-3.1.0.so for package: gdal
+--> Processing Dependency: libodbcinst.so.1 for package: gdal
+--> Processing Dependency: libnetcdf.so.4 for package: gdal
+--> Processing Dependency: libgeos_c.so.1 for package: gdal
+--> Processing Dependency: libodbc.so.1 for package: gdal
+---> Package gdal-devel.i386 0:1.4.4-2.el5.rf set to be updated
+--> Running transaction check
+---> Package geos.i386 0:3.2.2-1.el5.rf set to be updated
+--> Processing Dependency: libgeos-3.2.2.so for package: geos
+---> Package geos-devel.i386 0:3.1.0-1.el5.rf set to be updated
+--> Processing Dependency: libgeos-3.1.0.so for package: gdal
+---> Package netcdf.i386 0:3.6.3-1.el5.rf set to be updated
+---> Package unixODBC-libs.i386 0:2.2.11-10.el5 set to be updated
+--> Running transaction check
+---> Package geos-devel.i386 0:3.1.0-1.el5.rf set to be updated
+--> Processing Dependency: libgeos-3.1.0.so for package: gdal
+---> Package geos-devel.i386 0:3.2.2-1.el5.rf set to be updated
+--> Finished Dependency Resolution
+gdal-1.4.4-2.el5.rf.i386 from rpmforge has depsolving problems
+  --> Missing Dependency: libgeos-3.1.0.so is needed by package gdal-1.4.4-2.el5.rf.i386 (rpmforge)
+Error: Missing Dependency: libgeos-3.1.0.so is needed by package gdal-1.4.4-2.el5.rf.i386 (rpmforge)
+ You could try using --skip-broken to work around the problem
+ You could try running: package-cleanup --problems
+                        package-cleanup --dupes
+                        rpm -Va --nofiles --nodigest
+The program package-cleanup is found in the yum-utils package.

@@ -1,0 +1,3 @@
+apt-cache search dblink
+postgresql-contrib-8.4 - additional facilities for PostgreSQL
+apt-get install postgresql-contrib-8.4

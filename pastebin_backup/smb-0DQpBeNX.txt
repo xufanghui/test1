@@ -1,0 +1,5 @@
+apt-get install smb-nat
+jftp - Java GUI client for FTP, SMB, SFTP and NFS
+samdump - Extracts a Samba-style smbpasswd file directly from an offline copy of the SAM
+                                                                            
+apt-get install lcrack

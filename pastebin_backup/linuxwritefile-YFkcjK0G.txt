@@ -1,0 +1,15 @@
+#!/bin/sh
+cat >a.txt<<EOF
+a   dasfiidsiaf
+dsaf
+dsfaidsaf
+dsafasdf
+dsafsda
+EOF
+cat >a.txt <<EOF
+c
+dasf
+
+
+sdafafsd
+EOF

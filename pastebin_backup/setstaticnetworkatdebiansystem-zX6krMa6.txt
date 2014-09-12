@@ -1,0 +1,22 @@
+1.vi /etc/network/interfaces
+2.input content:
+auto lo
+iface lo inet loopback
+
+allow-hotplug eth0
+#iface eth0 inet dhcp
+iface eth0 inet static
+address 192.168.1.44
+gateway 192.168.1.1
+netmask 255.255.255.0
+network 192.168.1.0
+broadcast 192.168.1.255
+
+3.ifdown eth0&&ifup eth0
+4.vi boot_net.sh
+5.input content:
+	/sbin/ifup eth0
+4.init 6
+5. cd /etc/rcS.d/
+6.ln -s /etc/network/boot_net.sh S30net
+thanks your help.

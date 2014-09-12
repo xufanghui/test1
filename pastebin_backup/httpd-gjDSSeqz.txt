@@ -1,0 +1,2 @@
+[root@localhost lib]# whereis httpd
+httpd: /usr/sbin/httpd.worker /usr/sbin/httpd.event /usr/sbin/httpd /etc/httpd /usr/lib/httpd /usr/share/man/man8/httpd.8.gz

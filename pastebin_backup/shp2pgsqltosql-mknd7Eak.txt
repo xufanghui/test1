@@ -1,0 +1,1 @@
+shp2pgsql a/yangzhou_grid_1km_4326.shp public.yangzhou_grid_1km_4326 > 1km_4326.sql

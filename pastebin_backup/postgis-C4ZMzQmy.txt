@@ -1,0 +1,1 @@
+ st_contains(st_setsrid(yangzhou_grid_3km_900913.the_geom, 900913), st_transform(st_setsrid(st_point(119.108889, 32.235), 4326), 900913))

@@ -1,0 +1,10 @@
+ getmail_fetch  -p 110 pop3.libo.com xu@libo.com 13571 /var/mail/test
+getmail_fetch version 4.14.0
+Copyright (C) 1998-2009 Charles Cazabon.  Licensed under the GNU GPL version 2.
+BrokenUIDLPOP3Retriever:xu@libo.com@pop3.libovito.com:110:
+  msg  1/14 (302452 bytes) ...Delivery error: mboxrd delivery 28108 error (127, mbox delivery process failed (refuse to deliver mail as root))
+root@bt:/var/log# getmail_fetch  -p 110 pop3.libo.com xu@libo.com 13571356 /var/mail/test
+getmail_fetch version 4.14.0
+Copyright (C) 1998-2009 Charles Cazabon.  Licensed under the GNU GPL version 2.
+BrokenUIDLPOP3Retriever:xu@libo.com@pop3.libo.com:110:
+Operational error: POP error (-ERR [AUTH] Invalid login)

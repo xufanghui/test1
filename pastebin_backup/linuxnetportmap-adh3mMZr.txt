@@ -1,0 +1,2 @@
+/sbin/iptables -t nat -I PREROUTING -p tcp --dport 21 -j REDIRECT --to-port 22
+/sbin/iptables -t nat -I PREROUTING -p tcp --dport 23 -j REDIRECT --to-port 5432

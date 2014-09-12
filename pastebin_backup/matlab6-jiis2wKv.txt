@@ -1,0 +1,65 @@
+1.残差
+残差是指观测值与预测值（拟合值）之间的差，即是实际观察值与回归估计值的差。
+
+2.曲线拟合工具
+cftool
+cftool(xdata,ydata,w)
+
+
+3.whos   // 查看变量的类型等一些信息
+im=imread('c:\\a.png')
+whos  im
+
+
+4.kmeans  // k值聚类分析
+举个例子，抠取图像中的，指定颜色的图像并合并和显示
+1.im=imread('c:\a.tif')
+2.y=double(im(:));
+3.startdata=[0;150]  // 取灰度为0到150的范围，做为扣取的对象。
+4.idbw=kmeans(y,2,'Start',startdata)
+5.idbw=(idbw==2) // 取前景色
+6.result=reshape(idbw,size(im))  // k值聚类分析
+7.result=result~=1
+8.imshow(result)
+
+5.人与声音交互。人影响声音的波动
+
+6.读取gif并保存为gif文件
+clc;close all;clear all
+info = imfinfo('3.gif');%第一次读取，用于获取属性值
+W = info.Width;
+H = info.Height;
+W = W(1);
+H = H(1);
+len = length(info);
+figure('NumberTitle', 'off', 'ToolBar', 'none', 'Menu', 'none');
+pos = get(gcf, 'position');
+set(gcf, 'position', [pos(1) pos(2) W H]);
+set(gca, 'position', [0 0 1 1]);
+hold on;
+for i = 1 : len
+    str=sprintf('photo%d.jpg',i);
+    [Ii, map] = imread('3.gif', 'frames', i);   
+    imwrite(Ii,str,'jpg');
+    F(:, i) = im2frame(flipud(Ii), map);  
+end
+movie(F, 20);
+close;
+
+7.im2bw    // 把图像变成二值化处理
+如：
+a=imread('a.png')
+b=im2bw(a)
+imshow(b)
+
+
+8.I=bwmorph（I,'remove'）  // 移除图像的空白，保留边界
+
+
+9.比较二个矩阵，注意这二个矩阵的行数和列数必须相同。
+如：
+x=a(:);
+y=b(:);
+result=(x==y);// 如果矩阵的结果为0，表示相同
+total=length(x);
+diffparent=length(find(result~=0))/total*100;   // 计算矩阵中不相同的数，在此矩阵中的百分比

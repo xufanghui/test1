@@ -1,0 +1,4 @@
+convert *.png *.jpg
+convert -delay 350 -loop 0 *.png r.gif 
+convert $(for ((a=0; a<24; a++)); do printf -- "--delay 10 *-%s.jpg " $a; done;) result.gif
+convert 24.gif s.png

@@ -1,0 +1,87 @@
+matlab学习笔记
+1.fullfile(路径1，路径2，文件名); // 创建全路径文件
+// 如ok_file=fullfile("c:","app","ok.m");最终为C:\app\ok.m
+2.fopen('./stations/OVL_stations_o3.txt')   //打开文件，并返回指针
+如：a=fopen('./stations/OVL_stations_o3.txt')
+str=fctl(a);   //读取第一行数据，并赋值给str
+
+3.分隔字符串用regexp函数
+如：
+a1=regexp(str,';');   // 以分号分隔字符串，返回的数据为一维数组
+
+
+4.~=表示不等号
+如：str~=-1
+
+5.转换函数
+str2double
+isstr
+6.结构体定义
+struct('nr',数据1,'type',数据2);
+如：
+d=struct('n',8884,'b',00999);
+d.n
+d.dbfile='c:\dbfile.mat';
+d.have_db = true;
+
+6.数组结构体
+str_info=[];
+str_info=[str_info:struct('nr':)]
+
+7.clear   // 清除工作空间数据
+8.load  用来加载mat文件数据
+load('c:\test.mat');
+9.显示矩阵的第2列
+data(:,2)
+
+10.sort对数据进行排序
+
+sort(ok(:,2),1,'ascend')   // ok矩阵中的第2行数据升序排列
+sort(ok(:,2),1,'descend')                         //ok矩阵中的第2行数据升序排列
+
+
+
+11. datestr( pol_date(1), 'yyyy-mm-dd' ) 日期转换为字符串
+12.isempty   // 表示数据是否为空
+13.length    // 数据长度，一般是一维数组
+
+14.生成序列数据
+116:1:118  // 表示生成的数据为开始为116，步长为1，结束为118
+打印结构为：
+ans =
+
+   116   117   118
+   
+15.strcmp  //比较数据
+
+16.列表的定义
+如：
+a={
+    'list-1','list-2',
+    'list-3','list-4'}
+    
+    
+    
+17.addpath ./lib
+
+18.function定义
+如：
+function cnf=read_cnf()
+c=struct();
+c.file='c:\config.txt';
+cnf=c;
+
+function [a]=read_cnf()
+a=[1:1:23];
+end
+
+19.find 
+doc find   // 查看帮助文档
+如：
+a=magic(4)   // 创建magic
+find(a>10) //返回数据值
+find(a==16-1)  //返回此数据的个数（列数）
+
+20.exp  e的几次幂
+
+e=exp(1)

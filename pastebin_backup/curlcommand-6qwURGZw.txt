@@ -1,0 +1,7 @@
+Curl command for issuing a POST request
+curl --data "username=tony&password=secret" http://exmaple.com/login/
+       
+curl -F username=tony -F password=secret http://exmaple.com/login/
+       
+curl --user name:password http://exmaple.com/login/
+注意区别

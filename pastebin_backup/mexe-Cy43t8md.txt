@@ -1,0 +1,57 @@
+1.设置编译器：
+
+在确定安装好Matlab Compiler后，还需要对Compiler进行适当的配置，方法是在Matlab命令窗口输入：
+mbuild –setup， 按提示选择matlab自带编译器LCC。
+
+2.将程序编译成exe文件：
+（1）如果全是M文件
+调用格式：
+Mcc -m mainmfile mfile1 mfile2 …… mfileN；
+第一个mainmfile 为主程序（main function），其余均为需要的M文件。
+（2）如果是GUI文件
+例如mygui.fig 和mygui.m，编译这个GUI的命令是：
+>>mcc -m mygui
+（3）如果既有GUI文件，又有M文件（谁是主程序，谁放在前）
+①>>mcc -m mygui mfile （mygui是主程序，即mygui中用到mfile.m）；
+②>>mcc -m mfile mygui（mfile是主程序，即mfile.m中用到mygui）。
+（4）如果GUI用到ActiveX控件
+>>mcc -m mygui -a myactivex
+     myactivex 是ActiveX控件的文件名。
+编译完成后，可通过双击生成.exe文件；或者在matlab命令行输入带“！”的命令：
+>>! mainmfile （主程序文件名）
+
+3.编译后的文件可以先打包成一个.exe文件，然后再用隐藏DOS窗口的软件将该.exe文件弹出的DOS窗口隐藏。
+（1）打包软件很多。如MoleBox Pro;
+（2）隐藏DOS窗口的方法或软件也很多，在各大Matlab论坛上都有，例如：Matlab中文论谈。
+下面介绍两种隐藏方法：
+方法一： 在命令窗口输入：
+cd(prefdir)
+edit compopts.bat
+根据你使用的环境，在打开的文件最后添加以下语句：
+A.VC环境下：
+   set LINKFLAGS=%LINKFLAGS%/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup
+B.LCC环境下:
+   set LINKFLAGS=%LINKFLAGS% -subsystemwindows
+C. Borland:
+      set LINKFLAGS=%LINKFLAGS% -aa
+
+保存以后，再重新编译m文件，生成的exe文件运行起来就没有dos窗口了。
+
+方法二：使用suppress工具，点击下列地址下载（具体操作里面有说明）。
+http://www.mathworks.com/matlabcentral/fx_files/3909/1/suppress.zip
+
+方法一生成的exe再到没有任何安装MATLAB的机子上运行也不会有黑屏了。
+方法二的缺点就是要同时存在您生成的exe以及supress.exe，必须在同一目录下。
+
+4.如果目标计算机上没有安装该版本的matlab，上面生成的exe文件不能正常运行，
+解决方法有二：
+（1）将该执行文件所需要的dll文件都复制到目标计算机上；
+（2）在目标计算机上安装MCRinstaller.exe。（该文件位于matlab安装目录下的\toolbox\compiler\deploy\win32内）。
+
+将“MCRinstaller.exe安装目录\runtime\win32”这个路径添加到目标计算机的环境变量中，通常是自动加载。
+如果没有，也可手动安装，添加的方法是：
+右击“我的电脑”“属性”“高级”“环境变量”“添加”指定一个变量名，然后将上述路径复制到里面就可以了。
+
+注：
+在安装过程中会弹出让安装Microsoft.NETFramework可以不用安装。
+最后就是将编译生成的相相关文件拷贝到同一目录下，双击即可运行。

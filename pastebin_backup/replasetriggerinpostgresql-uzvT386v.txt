@@ -1,0 +1,15 @@
+CREATE or Replace FUNCTION func_geom_insert() RETURNS trigger AS $func_geom_insert$  
+DECLARE
+      results RECORD;
+    BEGIN  
+       FOR results IN SELECT * FROM geometries ORDER BY name  LOOP
+           IF  ST_Intersects(results.geom,NEW.geom) OR st_overlaps(results.geom,NEW.geom) OR st_contains(results.geom,NEW.geom) OR st_crosses(results.geom,NEW.geom) OR st_covers(results.geom,NEW.geom) OR st_touches(results.geom,NEW.geom) OR st_equals(results.geom,NEW.geom) THEN
+            	insert into geometries1(name,geom) values(NEW.name,NEW.geom);
+		EXIT;
+           END IF;            
+       END LOOP;          
+        return null;  
+    END;  
+$func_geom_insert$ LANGUAGE plpgsql;  
+CREATE TRIGGER t_insert_2_table BEFORE INSERT ON geometries  
+    FOR EACH ROW EXECUTE PROCEDURE func_geom_insert();

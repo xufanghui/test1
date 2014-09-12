@@ -1,0 +1,9 @@
+vi test.f90:
+program main
+write(*,*) "hello"
+stop 
+end
+
+gfortran filename.f90 -o anyname  按回车，会生成一个anyname.out的可执行文件
+./anyname        运行此可执行文件就OK了，结果会输出到所设定的位置上
+ifort -o test.f90 test.ex，如果没有出现错误信息，说明编译通过，然后直接输入 test.ex，回车即可。

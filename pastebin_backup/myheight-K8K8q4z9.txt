@@ -1,0 +1,7 @@
+width:1347px;
+width:980px;
+width:1000px;
+1327px
+990px
+960px
+1010px

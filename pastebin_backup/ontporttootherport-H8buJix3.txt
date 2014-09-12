@@ -1,0 +1,12 @@
+ont port to other port
+rtcp.py address:https://github.com/knownsec/rtcp
+1.server1(localhost:23) to server2(124.205.123.98:23)
+#!/bin/bash
+python ./rtcp.py c:localhost:22 c:124.205.123.98:23
+
+2.local 23 port to 119 port
+python ./rtcp.py l:23 l:119
+
+3.ssh link
+ssh -P 119 root@124.205.123.98
+4.input your password

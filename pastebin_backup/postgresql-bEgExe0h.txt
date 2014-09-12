@@ -1,0 +1,13 @@
+psql:shijiazhuang_grid.sql:10: NOTICE:  CREATE TABLE will create implicit sequence "shijiazhuang_grid_900913_gid_seq" for seri
+al column "shijiazhuang_grid_900913.gid"
+psql:shijiazhuang_grid.sql:10: NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index "shijiazhuang_grid_900913_pkey"
+for table "shijiazhuang_grid_900913"
+CREATE TABLE
+psql:shijiazhuang_grid.sql:11: ERROR:  permission denied for relation geometry_columns
+±³¾°:  SQL statement "DELETE FROM geometry_columns WHERE
+                f_table_catalog = '' AND f_table_schema = 'public' AND f_table_name = 'shijiazhuang_grid_900913' AND f_geometr
+y_column = 'the_geom'"
+PL/pgSQL function "addgeometrycolumn" line 132 at EXECUTE statement
+SQL statement "SELECT AddGeometryColumn('', $1 , $2 , $3 , $4 , $5 , $6 )"
+PL/pgSQL function "addgeometrycolumn" line 4 at SQL statement
+psql:shijiazhuang_grid.sql:12: ERROR:  current transaction is aborted, commands ignored until end of transaction block

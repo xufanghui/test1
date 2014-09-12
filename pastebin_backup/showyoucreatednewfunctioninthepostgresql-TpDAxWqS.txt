@@ -1,0 +1,22 @@
+CREATE OR REPLACE FUNCTION test_1( date1 VARCHAR(100),pollutant1 VARCHAR(20),grid_id1 integer)
+   RETURNS BOOLEAN
+   AS
+$BODY$
+DECLARE  
+date1 varchar(100);
+pollutant1 varchar(20);
+grid_id1 integer;
+value1 bigint;
+BEGIN
+value1:='select sum("hourly_rio_result".value)::integer/count(*) as a from "hourly_rio_result" where rundate=date1 and pollutant=pollutant1 and grid_id=grid_id1';
+insert into daily_rio_result(rundate,pollutant,grid_id,value) values(to_date(date1,'yyyy-mm-dd'),pollutant1,grid_id1,value1);
+RETURN TRUE;  
+END
+$BODY$
+LANGUAGE 'plpgsql' VOLATILE;  -- 最后别忘了这个。
+select test_1('2012-03-26','pm10',2);
+
+CREATE OR REPLACE FUNCTION avg_v2(varchar(100),varchar(50),integer) RETURNS bigint AS $$
+    SELECT sum(hourly_rio_result.value)::integer/count(*) from hourly_rio_result where rundate=to_date($1,'yyyy-mm-dd') and pollutant=$2 and grid_id=$3
+$$ LANGUAGE SQL;
+select avg_v2('2012-03-26','pm10',2);

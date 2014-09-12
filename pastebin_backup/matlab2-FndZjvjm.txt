@@ -1,0 +1,60 @@
+1.fix   // 修改数据的长度，去掉小数点
+2.mean   // 求数组的平均值或矩阵列的平均值
+
+3.nargchk   // 验证参数个数
+如：
+function checka(a,b,c) 
+error(nargchk(1,3,nargin))   //注：nargin是常量
+
+4.加载类
++model
+	+pm25
+		model1.m
+		model2.m
+model1=model.('pm25').('model1')
+或者
+model1=model.pm25.model1
+
+5.zeros    // 初始化矩阵数组
+如：
+zeros(4)    //初始化4*4的矩阵，值都为0
+zeros(2,3)   //初始化2*3的矩阵，值都为0
+
+6.min  max
+ min([1,2,3,88])
+ max([1,2,3,88])
+ 
+7.mapstd   // 矩阵归一化，请看http://www.zdh1909.com/html/matlab/16085.html
+
+8.mkdir   //创建文件夹函数
+9.exist   //是否存在文件函数
+10.weights
+11.intersect(A,B)   // 求交集，返回的数据为[a,b,c] ,其中a表示的交集的数据，b表示A元素中交集的索引，c表示B元素中交集的索引
+如：
+A = [1 2 3 6]; B = [1 2 3 4 6 10 20];
+[a,b,c]=intersect(A,B);
+
+
+12.导出图片
+如：
+figure
+a=magic(16)
+pcolor(a)
+alpha(0.5)
+set(gcf,'Position',[100,100,500,600])
+
+xlabel('x')
+ylabel('y')
+title('test png')
+saveas(gcf,'c:\test.png')
+
+
+13.三维数组，转为二位数组，如果只是显示可以，如果具体的运算不能用
+如：
+a(3,3,3)=0
+y=a(1,:,:)
+y=y(:,:)
+y=reshape(y,3,3)
+z=a(:,1,:)
+z=reshape(z,3,3)
+x=a(:,:,1)

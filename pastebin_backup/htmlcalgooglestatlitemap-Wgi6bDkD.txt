@@ -1,0 +1,586 @@
+
+<html><head> 
+
+ 
+
+ 
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+
+<meta name="GENERATOR" content="Microsoft DHTML Editing Control"><title>Google Maps Image Tiles</title> 
+
+
+
+<style>
+
+button, input { border-width: 1px; font-size:12px;padding: 0 2px;}
+
+input { text-align:right; }
+
+ 
+
+</style></head><body style="font-family: Verdana,sans-serif; font-size: 80%; text-align: center; color: rgb(204, 204, 204); background-color: black;" onload="DoRebuild()"> 
+
+
+
+<script language="JavaScript" type="text/javascript"> <!--
+
+
+
+function element(id)
+
+{
+
+	return document.getElementById(id);
+
+}             
+
+
+
+function DoRebuild()
+
+{
+
+	var addr = GetQuadtreeAddress(element("input_longitude").value, element("input_latitude").value);
+
+	var coords = GetCoordinatesFromAddress(addr);
+
+	
+
+	element("calculated_longitude").innerHTML = "" + GetSexagesimalNotation(coords.long);
+
+	element("calculated_latitude").innerHTML = "" + GetSexagesimalNotation(coords.lat);
+
+	
+
+	// build a 3x3 table
+
+	var cursor = addr.substr(0, parseInt(element("input_zoom").value));
+
+	cursor = GetNextTileX(cursor,0);	// move to top left
+
+	cursor = GetNextTileY(cursor,0);
+
+	
+
+	for (var x = 0; x < 3; x++)
+
+	{
+
+		var c2 = cursor;
+
+		cursor = GetNextTileX(cursor,1);
+
+		for (var y = 0; y < 3; y++)
+
+		{
+
+		
+
+			element("t" + y + x).style.backgroundImage = "url(" + "http://khm.google.com/kh?v=88&t=" + c2 + ")";
+
+			c2 = GetNextTileY(c2,1);
+
+		}
+
+	}
+
+	
+
+	
+
+
+
+	
+
+	// populate the progression of images
+
+	for (var i = 0; i < 20; i++)
+
+	{
+
+	
+
+		var el = element("m" + i);
+
+		if (el)
+
+		{      
+
+			var src = "http://khm.google.com/kh?v=88&t=" + addr.substr(0, i+1);
+
+			el.alt = "Google Maps Address " + addr.substr(0, i+1);
+
+			el.style.backgroundImage = "url(" + src + ")";
+
+			el.src = "m" + addr.substr(i+1,1) + ".png";
+
+		}
+
+	}
+
+}   
+
+
+
+function GetNextTileX(addr, forward)
+
+{
+
+	if (addr == '')
+
+		return addr;
+
+		
+
+	var parent = addr.substr(0, addr.length-1);
+
+	var last = addr.substr(addr.length-1);
+
+	
+
+	if (last == 'q')
+
+	{
+
+		last = 'r';
+
+		if (!forward)
+
+			parent = GetNextTileX(parent, forward);
+
+	}
+
+	else if (last == 'r')
+
+	{
+
+		last = 'q';
+
+		if (forward)
+
+			parent = GetNextTileX(parent, forward);
+
+	}
+
+	else if (last == 's')
+
+	{
+
+		last = 't';
+
+		if (forward)
+
+			parent = GetNextTileX(parent, forward);
+
+	}
+
+	else if (last == 't')
+
+	{
+
+		last = 's';
+
+		if (!forward)
+
+			parent = GetNextTileX(parent, forward);
+
+	}
+
+	return parent + last;
+
+}
+
+
+
+function GetNextTileY(addr, forward)
+
+{
+
+	if (addr == '')
+
+		return addr;
+
+		
+
+	var parent = addr.substr(0, addr.length-1);
+
+	var last = addr.substr(addr.length-1);
+
+	
+
+	if (last == 'q')
+
+	{
+
+		last = 't';
+
+		if (!forward)
+
+			parent = GetNextTileY(parent, forward);
+
+	}
+
+	else if (last == 'r')
+
+	{
+
+		last = 's';
+
+		if (!forward)
+
+			parent = GetNextTileY(parent, forward);
+
+	}
+
+	else if (last == 's')
+
+	{
+
+		last = 'r';
+
+		if (forward)
+
+			parent = GetNextTileY(parent, forward);
+
+	}
+
+	else if (last == 't')
+
+	{
+
+		last = 'q';
+
+		if (forward)
+
+			parent = GetNextTileY(parent, forward);
+
+	}
+
+	return parent + last;
+
+}
+
+
+
+function MercatorToNormal(y)
+
+{
+
+	y = -y * Math.PI / 180;	// convert to radians
+
+	y = Math.sin(y);
+
+	y = (1+y)/(1-y);
+
+	y = 0.5 * Math.log(y);
+
+	y *= 1.0 / (2 * Math.PI);	// scale factor from radians to normalized 
+
+	y += 0.5;	// and make y range from 0 - 1
+
+	return y;
+
+}
+
+
+
+function NormalToMercator(y)
+
+{
+
+	y -= 0.5;
+
+	y *= 2 * Math.PI;	
+
+	y = Math.exp(y * 2);
+
+	y = (y-1)/(y+1);
+
+	y = Math.asin(y);
+
+	y = y * -180/Math.PI;	
+
+	return y;
+
+}
+
+
+
+function GetSexagesimalNotation(x)
+
+{
+
+
+
+	// 23° 27′ 30"
+
+	var ret = "";
+
+	if (x < 0)
+
+	{
+
+		ret += '-';
+
+		x = -x;
+
+	}
+
+	ret += Math.floor(x);
+
+	ret += '° ';
+
+	
+
+	x = (x - Math.floor(x)) * 60;
+
+	ret += Math.floor(x);
+
+	ret += "' ";
+
+	
+
+	x = (x - Math.floor(x)) * 60;
+
+	ret += Math.floor(x);
+
+	ret += '" ';
+
+	
+
+	return ret;
+
+}
+
+
+
+function GetCoordinatesFromAddress(str)
+
+{
+
+
+
+		// get normalized coordinate first
+
+	var x = 0.0;
+
+	var y = 0.0;
+
+	var scale = 1.0;
+
+	str = str.toLowerCase();
+
+	str = str.substr(1);	// skip the first character
+
+	while (str.length > 0)
+
+	{
+
+		scale *= 0.5;
+
+		var c = str.charAt(0);	// remove first character
+
+		if (c == 'r' || c == 's')
+
+		{
+
+	
+
+			x += scale;
+
+		}
+
+		if (c == 't' || c == 's')
+
+		{
+
+	
+
+			y += scale;
+
+		}
+
+		
+
+		str = str.substr(1);
+
+	}
+
+	
+
+	var ret = new Object();
+
+	
+
+	ret.longmin = (x - 0.5) * 360;
+
+	ret.latmin = NormalToMercator(y);
+
+	ret.longmax = (x + scale - 0.5) * 360;
+
+	ret.latmax = NormalToMercator(y + scale);
+
+	ret.long = (x + scale * 0.5 - 0.5) * 360;
+
+	ret.lat = NormalToMercator(y + scale * 0.5);
+
+	
+
+	return ret;
+
+}
+
+
+
+
+
+
+
+function GetQuadtreeAddress(long, lat)
+
+{
+
+		// now convert to normalized square coordinates
+
+		// use standard equations to map into mercator projection
+
+		
+
+	var x = (180.0 + parseFloat(long)) / 360.0;
+
+	var y = MercatorToNormal(parseFloat(lat));
+
+	
+
+	var quad = "t";	// google addresses start with t
+
+	var lookup = "qrts";	// tl tr bl br
+
+	
+
+	for (digits = 0; digits < 24; digits++)
+
+	{
+
+			// make sure we only look at fractional part
+
+		x -= Math.floor(x);
+
+		y -= Math.floor(y);
+
+		
+
+		quad = quad + lookup.substr((x>=0.5?1:0) + (y>=0.5?2:0), 1);
+
+		
+
+			// now descend into that square
+
+		x *= 2;
+
+		y *= 2;
+
+	}
+
+	return quad;
+
+}
+
+
+
+//--> </script>
+
+
+
+
+
+<h2>Sample: Addressing Google Maps image tiles</h2>
+
+<form name="theForm" onsubmit="DoRebuild(); return false;"> 
+
+<em>Fetch Google Maps tiles via longitude/latitude</em>
+
+<input style="width: 6em;" id="input_longitude" name="longitude" value="151.211">
+
+<input style="width: 6em;" id="input_latitude" name="latitude" value="-33.852">
+
+<input style="width: 6em;" id="input_zoom" name="zoom" value="21">
+
+<button style="margin: 0pt 8px;" type="submit">Rebuild</button>
+
+</form>
+
+
+
+<div><em>(Image centered at: <span id="calculated_longitude"></span>, <span id="calculated_latitude"></span>)</em></div>
+
+
+
+<table style="border: 2px solid white; margin: 1em auto; background-color: rgb(17, 17, 68);" align="center" cellpadding="0" cellspacing="0">
+
+<tbody><tr><td style="background-image: url(http://khm.google.com/kh?v=88&amp;t=tsrrtsqrssqqttsstrst);" id="t00" height="256" width="256">&nbsp;</td><td style="background-image: url(http://khm.google.com/kh?v=88&amp;t=tsrrtsqrssqqttsstrss);" id="t01" height="256" width="256">&nbsp;</td><td style="background-image: url(http://khm.google.com/kh?v=88&amp;t=tsrrtsqrssqqttsssqtt);" id="t02" height="256" width="256">&nbsp;</td></tr>
+
+<tr><td style="background-image: url(http://khm.google.com/kh?v=88&amp;t=tsrrtsqrssqqttsstsrq);" id="t10" height="256" width="256">&nbsp;</td><td style="background-image: url(http://khm.google.com/kh?v=88&amp;t=tsrrtsqrssqqttsstsrr);" id="t11" height="256" width="256">&nbsp;</td><td style="background-image: url(http://khm.google.com/kh?v=88&amp;t=tsrrtsqrssqqttssstqq);" id="t12" height="256" width="256">&nbsp;</td></tr>
+
+<tr><td style="background-image: url(http://khm.google.com/kh?v=88&amp;t=tsrrtsqrssqqttsstsrt);" id="t20" height="256" width="256">&nbsp;</td><td style="background-image: url(http://khm.google.com/kh?v=88&amp;t=tsrrtsqrssqqttsstsrs);" id="t21" height="256" width="256">&nbsp;</td><td style="background-image: url(http://khm.google.com/kh?v=88&amp;t=tsrrtsqrssqqttssstqt);" id="t22" height="256" width="256">&nbsp;</td></tr>
+
+</tbody></table>                
+
+
+
+<h2>All tiles containing these coordinates</h2>
+
+
+
+<img style="background-image: url(http://khm.google.com/kh?v=88&amp;t=t);" alt="Google Maps Address t" id="m0" src="ms.png" hspace="0">
+
+<img style="background-image: url(http://khm.google.com/kh?v=88&amp;t=ts);" alt="Google Maps Address ts" id="m1" src="mr.png" hspace="0"> 
+
+<img style="background-image: url(http://khm.google.com/kh?v=88&amp;t=tsr);" alt="Google Maps Address tsr" id="m2" src="mr.png" hspace="0"> 
+
+<img style="background-image: url(http://khm.google.com/kh?v=88&amp;t=tsrr);" alt="Google Maps Address tsrr" id="m3" src="mt.png" hspace="0"> 
+
+<img style="background-image: url(http://khm.google.com/kh?v=88&amp;t=tsrrt);" alt="Google Maps Address tsrrt" id="m4" src="ms.png" hspace="0"> 
+
+<img style="background-image: url(http://khm.google.com/kh?v=88&amp;t=tsrrts);" alt="Google Maps Address tsrrts" id="m5" src="mq.png" hspace="0"> 
+
+<img style="background-image: url(http://khm.google.com/kh?v=88&amp;t=tsrrtsq);" alt="Google Maps Address tsrrtsq" id="m6" src="mr.png" hspace="0"> 
+
+<img style="background-image: url(http://khm.google.com/kh?v=88&amp;t=tsrrtsqr);" alt="Google Maps Address tsrrtsqr" id="m7" src="ms.png" hspace="0"> 
+
+<img style="background-image: url(http://khm.google.com/kh?v=88&amp;t=tsrrtsqrs);" alt="Google Maps Address tsrrtsqrs" id="m8" src="ms.png" hspace="0"> 
+
+<img style="background-image: url(http://khm.google.com/kh?v=88&amp;t=tsrrtsqrss);" alt="Google Maps Address tsrrtsqrss" id="m9" src="mq.png" hspace="0"> 
+
+<img style="background-image: url(http://khm.google.com/kh?v=88&amp;t=tsrrtsqrssq);" alt="Google Maps Address tsrrtsqrssq" id="m10" src="mq.png" hspace="0"> 
+
+<img style="background-image: url(http://khm.google.com/kh?v=88&amp;t=tsrrtsqrssqq);" alt="Google Maps Address tsrrtsqrssqq" id="m11" src="mt.png" hspace="0"> 
+
+<img style="background-image: url(http://khm.google.com/kh?v=88&amp;t=tsrrtsqrssqqt);" alt="Google Maps Address tsrrtsqrssqqt" id="m12" src="mt.png" hspace="0"> 
+
+<img style="background-image: url(http://khm.google.com/kh?v=88&amp;t=tsrrtsqrssqqtt);" alt="Google Maps Address tsrrtsqrssqqtt" id="m13" src="ms.png" hspace="0"> 
+
+<img style="background-image: url(http://khm.google.com/kh?v=88&amp;t=tsrrtsqrssqqtts);" alt="Google Maps Address tsrrtsqrssqqtts" id="m14" src="ms.png" hspace="0"> 
+
+<img style="background-image: url(http://khm.google.com/kh?v=88&amp;t=tsrrtsqrssqqttss);" alt="Google Maps Address tsrrtsqrssqqttss" id="m15" src="mt.png" hspace="0"> 
+
+<img style="background-image: url(http://khm.google.com/kh?v=88&amp;t=tsrrtsqrssqqttsst);" alt="Google Maps Address tsrrtsqrssqqttsst" id="m16" src="ms.png" hspace="0"> 
+
+<img style="background-image: url(http://khm.google.com/kh?v=88&amp;t=tsrrtsqrssqqttssts);" alt="Google Maps Address tsrrtsqrssqqttssts" id="m17" src="mr.png" hspace="0">
+
+<img style="background-image: url(http://khm.google.com/kh?v=88&amp;t=tsrrtsqrssqqttsstsr);" alt="Google Maps Address tsrrtsqrssqqttsstsr" id="m18" src="mr.png" hspace="0">
+
+<img style="background-image: url(http://khm.google.com/kh?v=88&amp;t=tsrrtsqrssqqttsstsrr);" alt="Google Maps Address tsrrtsqrssqqttsstsrr" id="m19" src="mr.png" hspace="0">
+
+
+
+<p></p>
+
+
+
+<p><small>
+
+Code by <a href="http://intepid.com/">Mark Pursey</a> updated 6:52:37 PM Tuesday 27/05/2008</small>
+
+ </p>  </body></html>

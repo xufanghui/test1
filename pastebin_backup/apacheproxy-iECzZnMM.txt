@@ -1,0 +1,18 @@
+<VirtualHost *:80>
+ServerName test1.test.com
+<Proxy *>
+ Order deny,allow
+ Allow from all
+</Proxy>
+ProxyPass /index  http://192.168.1.100:8080/demo1
+ProxyPassReverse /index  http://192.168.1.100:8080/demo1
+</VirtualHost>
+<VirtualHost *:80>
+ServerName test2.test.com
+<Proxy *>
+ Order deny,allow
+ Allow from all
+</Proxy>
+ProxyPass /index  http://192.168.1.100:8080/demo2
+ProxyPassReverse /index  http://192.168.1.100:8080/demo2
+</VirtualHost>

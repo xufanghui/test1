@@ -1,0 +1,6 @@
+url编码
+%3d  =
+%25  %
+%20 space
+%oa new line
+%00 null byte

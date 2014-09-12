@@ -1,0 +1,4 @@
+#添加启动脚本
+runlevel
+cd rc   #切换到相应目录
+ln -s /use/soft/tools/tomcat.sh S88tomcat

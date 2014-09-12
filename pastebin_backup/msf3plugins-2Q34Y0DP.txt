@@ -1,0 +1,6 @@
+/opt/framework/msf3/plugins# ls
+auto_add_route.rb  ffautoregen.rb  nessus.rb    session_tagger.rb  wmap.rb
+db_credcollect.rb  ips_filter.rb   nexpose.rb   socket_logger.rb   xmlrpc.rb
+db_tracker.rb      lab.rb          openvas.rb   sounds.rb
+editor.rb          msfd.rb         pcap_log.rb  thread.rb
+event_tester.rb    msgrpc.rb       sample.rb    token_hunter.rb

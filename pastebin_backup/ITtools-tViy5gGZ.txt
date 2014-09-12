@@ -1,0 +1,516 @@
+##############################FONPWN MANIFEST####################################
+
+Version 1.0
+
+				Introduction
+
+This package is a collection of programs, apps, utilities, hacks, and know-how
+that are meant to make your computing a bit more... interesting. Whether you're
+an avid IT Specialist, the family computer tech, or simply a troll looking for
+new tools to use, there's something here for you. 
+A majority of these applications are meant for PC use, but there are SOME *nix
+and Mac applications included, as well.
+It should be noted that some of the files in this package ARE of questionable
+legality. 
+I should probably say something about how this package is for 
+educational purposes, but fuck it. That shit's for cop-outs, anyway. I'm 
+pro-piracy and anti-establishment, and as far as computing laws are concerned,
+not a single fuck is given.
+
+Raise some hell, boys.
+
+	-Atlus
+
+
+-----------------------------------------------------------------------------------
+CONTENTS:
+-Apps - Other
+-Chan Tools
+-Doom (Dangerous Programs)
+-H4X0R Tutorials
+-Information
+-Installs
+-Intrusion
+-Linux Tools
+-Network Tools
+-Portable Ubuntu
+-Pranks
+-Security
+-Shocking (Shock files and sites)
+
+-----------------------------------------------------------------------------------
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+			    @@ APPS - OTHER @@
+
+-DoubleDriver.exe
+	*(PC) Scans, backs up and restores drivers.
+-Firefox Portable
+	*(PC/Nix) Portable Mozilla Firefox web browser.
+-Glint.exe
+	*(PC) shows system activity by using system performance counters in local 
+	or remote computer.
+-Google Chrome Portable
+	*(PC/Nix) Portable Google Chrome.
+-JavaRa
+	*(PC) Removes old and redundant versions of the Java Runtime Environment 
+	(JRE).
+-Monitor Tester
+	*(PC) Utility for setting the parameters, controls and adjustments of 
+	monitors and helps to measure picture quality.
+
+-Tweaks
+ -7000 Plus Patch
+	*(Windows 7, RC Build 7000 only) Enables fully unlocked access to Windows 
+	7 features in Release Candidate Build 7000
+ -TweaksLogon.exe
+	*(Windows 7 only) Allows user to change default logon screen background.
+ -TweakUI.exe
+	*(Windows XP only) Allows user to fine-tune and tweak XP settings.
+ -Ultimate Windows Tweaker
+	*(Windows 7 only) Allows user to fine-tune and tweak Windows 7 settings.
+ -Vista Tweaker
+	*(Windows Vista only) Allows user to fine-tune and tweak Windows Vista 
+	settings.
+-Useful Batch Files
+ -Abort Shutdown
+	*(PC) .bat made to prevent unwanted shutdowns.
+ -taskkil.bat
+	*(PC) .bat made to kill unresponsive processes.
+
+
+-ChkFlsh.exe
+	*(PC) Utility allows the user to check the integrity of flash drives for 
+	errors.
+-DeadPixelTester.exe
+	*(PC) Utility allows the user to check monitors for dead spots and 
+	pixels.
+-SoftbyteLabs Shareware Suite
+	*(PC) Install file installs BrownRecluse (Online spider downloads 
+	websites and databases), BlackWidow (Batches downloaded files), 
+	CloneMaster (Clears duplicate files from user's computer), ComparatorPro 
+	(File backup), NameWiz (Batch rename files), and MailTalkX (email client).
+-SumatraPDF
+	*(PC) Standalone PDF reader.
+-unetbootin
+	*(PC) Writes an .iso to a flash drive. Meant for bootable Linux live 
+	drives.
+
+----------------------------------------------------------------------------------
+
+
+			    @@ CHAN TOOLS @@
+
+-TripcodeExplorer
+	*(PC) Utility for bruteforcing tripcodes for use in imageboards
+-Xchan Dumper
+	*(PC) Utility dumps files to a designated board on any *chan.
+
+
+----------------------------------------------------------------------------------
+
+			      @@ DOOM @@
+
+-BWRaeper
+	*(PC) DoS utility originally for using up a target's bandwidth.
+-Darrick's Boot-and-Nuke
+	*(PC) Erases entire hard drive. In both .iso and .exe form.
+-Domorato
+	*(PC) SMS bomber written in PHP.
+-EpicFailCannon
+	*(PC) Installs EpicFailCannon. A DoS utility that constantly pings a 
+	target.
+-FUSION5.2
+	*(PC) Script for fusing .zip, .7z, and .rar with .jpg, .gif, .bmp, .png,
+	 .swf.
+-Gay Pride Cannon
+	*(PC) Derivative of Low Orbit Ion Cannon.
+-ircaids
+	*(PC) irc raep tool.
+-Longcat Flooder
+	*(PC) SYN/TCP/UDP/HTTP DoS tool originally made to DDoS Subeta.
+-Longcat Death Star
+	*(PC) DoS tool which uses IRC connections to recieve targets and firing 
+	times. Essentially a voluntary botnet.
+-Proxifier
+	*(PC) A program that allows network applications that do not support 
+	working through proxy servers to operate through an HTTPS or SOCKS proxy 
+	or a chain of proxy servers.
+-Q Slowloris
+	*(PC) DoS program.
+-rokits
+	*(PC) A touchy DoS program.
+-Shitnami
+	*(PC) A tool written specifically to target Anontalk. It exploits a hole 
+	in Anontalk's deep search function to bypass the search flood detection.
+-UDPFlooder
+	*(PC) a UDP packet sender written in Java.
+-42.zip
+	*(all OS) A .zip file containing 4.2 petabytes of information. Unzip to 
+	fill and crash any hard drive.
+-LOIC.exe
+	*(PC) Low Orbit Ion Cannon http packet flooder.
+-mt_pulse.pl
+	*(Nix) UDP IP flooder written in Perl.
+-ZapAttack
+	*(Mac) UDP flooder for Macs.
+
+----------------------------------------------------------------------------------
+
+			      @@ H4X0R Tutorials @@
+
+-Basics - T3h 1337 Guide to Basic Networking
+-Botnets
+ -Botnet Tutorial 
+ -Botnet Supplies 
+ -TsunamiOverHost
+	*(PC) Botnet creation tool.
+-Dox
+-Flooding and Raeping
+ -Mail Flooding
+  -emailspam
+	*(Nix) A .pl that automatically signs a designated email address up for
+	 spam.
+  -Spam List
+  -Spam Your Enemies
+ -SMS - SMSRape
+ -UDP HTTP ETC
+  -Longcat Flooder Tutorial
+  -Low Orbit Ion Cannon Tutorial
+  -Mt Pulse.pl Tutorial
+  -Pyraep UDP Tutorial
+  -rokits Tutorial
+  -ssyn.pl Tutorial
+  -Zap Attack Tutorial
+-Keylogging
+-How to Change Your MAC Address
+-How to Get Private Pics Off Myspace
+-Phishing
+ -Phishing Tutorial
+ -Comprehensive list of Phishing accounts and sites in .html format.
+-Piracy
+-Pr0xies
+-PsyOps
+-Remain Anonymous
+-Security and Hiding Shit
+ -Hiding Shit
+ -Name Witchcraft
+-Sniffing
+
+
+----------------------------------------------------------------------------------
+
+			      @@ Information @@
+
+-Everyday Scripting with Ruby and Excel
+-Adobe Photoshop CS4 Classroom in a Book
+-Adobe Photoshop CS4 Studio Techniques
+-Common CMD commands
+-How To Create Keygens.pdf
+-Anarchists Cookbook v2000.pdf
+-Bionics for Evil Geniuses
+-Firewalls for Dummies 2nd Edition
+-Hacking - The Art of Exploitation
+-Phone Numbers of Big Shit.txt
+-Printers
+-Python Books
+	An enormous collection of Python scripting books.
+-recipes_for_disaster.pdf
+-Servers
+-Steal This Book
+-The Hacker's Underground Handbook
+-Windows Hacking 1
+-Windows Hacking 2
+-Windows Hacking 3
+
+----------------------------------------------------------------------------------
+
+			      @@ Installs @@
+
+-ccsetup
+	*(PC) Piriform utility that cleans out junk from the user's hard drive.
+-Cloud Antivirus
+	*(PC) Cloud-based antivirus program.
+-COMODO
+	*(PC) COMODO antimalware.
+-DeleteOnClick
+	*(PC) A very simple to use file secure delete utility for Microsoft 
+	Windows 98SE/ME/ 2000/XP/2003 and Vista 32 bit.
+-Defraggler
+	*(PC) Piriform alternative to the integrated Windows Defrag tool.
+-DRKSpider
+	*(PC) DRKSpider will navigate a web site from a given URL, checking 
+	internal (and external) links, style sheets, images and other files. 
+	Broken links will be reported and the sitemap displayed in a tree 
+	control. You will be able to export the sitemap to a plain text file for 
+	submitting to Google, Yahoo and other search engines.
+-Eraser
+	*(PC) Secure file deletion.
+-Freenet Installer
+	*(PC) Installs a freenet darknet framework allowing for anonymous web
+	browsing.
+-Manycam
+	*(PC) Creates a digital webcam allowing the user to stream video, 
+	still images, and switch between existing webcams easily. Good
+	for webcam trolling.
+-Network Probe
+	*(PC) Network monitor and protocol analyzer for traffic-level 
+	network monitoring
+-Network Stumbler
+	*(PC) Wifi network detection made for wardriving.
+-Proxifier
+	*(PC) A program that allows network applications that do not support 
+	working through proxy servers to operate through an HTTPS or SOCKS proxy 
+	or a chain of proxy servers.
+-Recuva
+	*(PC) Data recovery tool by Piriform.
+-Smart Installer Pack
+	*(PC) Installs a variety of useful tools and programs
+-Spybot Search and Destroy
+	*(PC) Comprehensive and thorough antispyware and antimalware program.
+-TeamViewer
+	*(PC) Remote access tool. Can be run in portable mode.
+
+----------------------------------------------------------------------------------
+
+			      @@ Intrusion @@
+
+-Keyloggers
+ -Ardamax Keylogger
+	*(PC) Allows for the creation of auto-install .exes that infect a 
+	computer and log data to FTP or email.
+ -VicSpy
+	*(PC) Keylogger that sends logs to up to 5 FTP directories. Allows for
+	customizable icons for install files, and file binding options.
+-MailPassView
+	*(PC) Scans the computer for saved email passwords. Only for desktop-
+	based email clients, not http.
+-wirelesskeyview
+	*(PC) Scans the computer for saved wifi passwords.
+-asterie
+	*(PC) Reveals the passwords stored behind the asterisks in the web pages
+	 of Internet Explorer 5.0 and above. You can use it for recovering a lost
+	 web site password, if it's stored on the computer.
+-DownTester
+	*(PC) Test Internet download speed in multiple locations around the 
+	 world.
+-ipnetinfo
+	*(PC) Allows user to easily find all available information about an IP 
+	 address: The owner of the IP address, the country/state name, IP 
+	 addresses range, contact information (address, phone, fax, and email),
+	 and more.
+-ipscan15
+	*(PC) IP and port scanner.
+-NetResView
+	*(PC) Reveals files and devices shared over a network.
+-PingInfoView
+	*(PC) Pings a designated website with detailed information.
+-RouterPassView
+	*(PC) Reveals router passwords stored on a computer.
+-SocketSniff
+	*(PC) Reveals ports used aand by which programs.
+-SystemExplorer
+	*(PC) Detailed information about the user's computer. Includes process,
+	program, and driver management.
+-VideoCacheView
+	*(PC) Reveals any flash videos stored in the browser's cahce.
+
+
+-----------------------------------------------------------------------------------
+
+			      @@ Linux Tools @@
+
+-absinthe
+	*(Nix) A GUI based tool designed to automate the process of blind sql 
+	injection.
+-amap
+	*(Nix) Application fingerprint mapper.
+-dnshijacker
+	*(Nix) A libnet/libpcap based packet sniffer & dns spoofer. A versatile 
+	tool, dnshijacker supports tcpdump style filters that allow you to 
+	specifically target victims.
+-macchanger
+	*(Nix) A GNU/Linux utility for viewing/manipulating the MAC address of 
+	network interfaces.
+-multispoof
+	*(Nix) An application, which exploits weak, address based authentication 
+	very frequently implemented by ISPs in Ethernet networks.
+-MySqlat0r
+	*(PC/Nix) A multi-platform application used to audit web sites in order 
+	to discover and exploit SQL injection vulnerabilities.
+-pwntooth
+	*(Nix) Automates Bluetooth Pen-Testing
+-pygetraep
+	*(Nix) CLI based program, used to raep bandwidth.
+-Slowloris
+	*(Nix) DDoS program.
+-XSSploit
+	*(PC/Nix) A multi-platform Cross-Site Scripting scanner and exploiter 
+	written in Python.
+
+
+-----------------------------------------------------------------------------------
+
+			      @@ Network Tools @@
+
+-MAC Address
+ -macshift
+	*(Windows XP) Command-line MAC Address changing utility.
+ -SMAC
+	*(PC) MAC Address Changer (Spoofer) for Windows 7, VISTA,, 2008, 2003, XP, 
+	2000 systems, regardless of whether the network card manufacturers allow 
+	this option or not.
+ -TMAC
+	*(PC) Technitium MAC Address Changer allows user to change MAC Address of
+	computer's Network Interface Card (NIC) irrespective to your NIC 
+	manufacturer or its driver.
+-NetTools
+	*(PC) Comprehensive networking tools and utilities, including ping, 
+	trace route, email bombing, IP Converter, spoofer, and much more.
+-Wireshark Portable
+	*(PC) Packet sniffing software.
+-Network Information Center
+	*(PC) basic network information tools, such as local IP, WAN IP, MAC, and
+	pinging utilities.
+-SoftPerfect Netwrok Scanner
+	*(PC) Scans IP ranges, gives options on a per-computer basis.
+-NMAP
+	*(PC) Utility for network exploration or security auditing.
+-Putty
+	*(PC) Telnet/SSH client.
+
+
+-----------------------------------------------------------------------------------
+
+			      @@ Portable Ubuntu @@
+
+A portable version of Ubuntu, run in a virtual-machine-like environment.
+
+
+-----------------------------------------------------------------------------------
+
+			      @@ Pranks @@
+
+-Bluescreen.zip
+	*(PC) A screensaver that, when run, emulates the Blue Screen of Death on an
+	 XP machine.
+-RickRoll Program
+	*(PC) A small program that, once installed and run, plays Rick Astley's 
+	"Never Gonna Give You Up" from an unknown source on the victim's computer.
+
+-----------------------------------------------------------------------------------
+
+			      @@ Security @@
+
+
+-Antivirus Apps
+ -Malwarebytes Anti-Malware
+	*(PC) In-depth anti-malware scanning software. Very strong.
+
+ -PC Decrapifier
+	*(PC) Scans and removes clunky malware, spyware, and unwanted files.
+ -HJTInstall
+	*(PC) HijackThis - Scans special parts in the registry and on your 
+	harddisk and compare them with the default settings.
+
+-Deletion Apps
+ -REVO Uninstaller
+	*(PC) Thorough program removal. Erases registry entries and unwanted files.
+ -NMRUI
+	*(PC) Norton Power Eraser. Secure deletion of files.
+ -Wipefile
+	*(PC) Secure file deletion.
+
+-Disk Recovery Apps
+ -Recuva Portable
+	*(PC) Portable version of Recuva data recovery software.
+ -Restoration
+	*(PC)  Restore files which are deleted from the recycle bin or deleted 
+	while holding down the Shift key by mistake. Also allows for secure 
+	file deletion.
+ -Testdisk and Protorec
+  -Testdisk
+	*(PC) Helps recover lost partitions and/or make non-booting disks bootable 
+	again when these symptoms are caused by faulty software, certain types of 
+	viruses or human error (such as accidentally deleting a Partition Table). 
+	Partition table recovery also available.
+  -Photorec
+	*(PC) Data recovery software designed to recover lost files including video,
+	documents and archives from hard disks, CD-ROMs, and lost pictures (thus 
+	the Photo Recovery name) from digital camera memory. PhotoRec ignores the 
+	file system and goes after the underlying data, so it will still work even 
+	if your media's file system has been severely damaged or reformatted.
+ -DBXtract
+	*(PC) Extracts all mail and news messages from individual dbx files.
+ -DiskDigger
+	*(PC) File recovery software. Works on any storage media.
+
+-Encryption
+ -TrueCrypt
+	*(PC) Detailed single-file encryption. Or Encrypt and entire volume.
+
+-Repair Apps
+ -Dial-a-Fix
+  -Dial-a-Fix
+	*(PC) Utility for 32-bit versions of Microsoft Windows. Repairs Windows
+	Update errors and problems with Automatic Updates, SSL, HTTPS, and 
+	Cryptography issues, COM/ActiveX object errors, missing registry entries.
+  -Secedit
+	*(PC) Configures and analyzes system security by comparing your current 
+	configuration to at least one template.
+ -LSPFix
+	*(PC) Utility to repair a loss of Internet access associated with certain 
+	types of software.
+ -MCPR
+	*(PC) McAfee Consumer Product Removal. Makes removing McAfee products 
+	simpler.
+ -Norton Removal Tool
+	*(PC) Makes Removing Norton products simpler.
+
+-Useful Sites
+ -How to Become a Computer Technician   
+	http://www.technibble.com/become-a-computer-technician/
+ -Check Windows Processes  		
+	http://www.processlibrary.com/
+ -Computer Manuals			
+	http://www.eserviceinfo.com/
+ -Find Hardware Drivers			
+	http://www.driverguide.com/
+ -Find Your Public IP Address		
+	http://www.whatismyip.com/
+ -Fix the PC with Reimage		
+	http://www.technibble.com/what-is-reimage/
+ -Hijack This! Log Analyzer		
+	http://www.hijackthis.de/
+ -List of Open Source Software		
+	http://en.wikipedia.org/wiki/List_of_open-source_software_packages
+ -Router Passwords
+	http://www.routerpasswords.com/
+ -Test Internet Speed
+	http://www.speedtest.net/
+ -Test a Single File for Viruses
+	http://www.virustotal.com/
+
+
+-----------------------------------------------------------------------------------
+
+			      @@ SHOCKING @@
+
+-Goar and Shock
+	A collection of gruesome images specifically for spamming and trolling
+	purposes.
+ -ugly
+	A set of indian porn with the most disgusting female (?) you've ever seen.
+-Shock Sites
+	A list of known shock sites.
+-Book1
+	The same list of shock sites, only with tinyurl alternatives.
+
+
+
+
+-----------------------------------------------------------------------------------
+
+Release of Liability:
+I am not responsible for any laws broken as a result of downloading and using this 
+package. Most of this is available online freely, anyway. So suck my dick.

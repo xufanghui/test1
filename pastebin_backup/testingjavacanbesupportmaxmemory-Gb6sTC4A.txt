@@ -1,0 +1,3 @@
+java -Xmx6144M -d64
+java -Xmx1g -d64
+java -Xmx2g -d64

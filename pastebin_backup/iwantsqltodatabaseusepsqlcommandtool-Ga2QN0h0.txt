@@ -1,0 +1,1 @@
+ psql -f 1km_4326.sql -U postgres -d emap_db -w

@@ -1,0 +1,97 @@
+
+package cn{
+	import flash.display.SimpleButton;
+	import flash.display.Loader;
+	import flash.display.Sprite;
+	import flash.display.MovieClip;
+	import flash.display.DisplayObject;
+   	import flash.printing.PrintJob;
+
+	import flash.events.Event;
+    import flash.events.KeyboardEvent;
+    import flash.ui.Keyboard;
+	import flash.ui.Mouse;
+	
+	import fl.controls.*;
+    
+	import flash.geom.Point;
+	import flash.events.*;
+	import flash.net.URLRequest;
+	import flash.xml.*;
+	import flash.external.ExternalInterface;
+	import flash.utils.Timer;
+	import flash.system.*;
+	import flash.text.*;
+	import flash.events.Event
+	import flash.net.URLLoader;
+	import flash.display.DisplayObject;
+    import flash.display.Graphics;
+    import flash.display.JointStyle;
+    import flash.display.LineScaleMode;
+    import flash.display.Shape;
+    import flash.display.Sprite;
+	import flash.display.Sprite;
+    import flash.filters.BitmapFilter;
+    import flash.filters.BitmapFilterQuality;
+    import flash.filters.BlurFilter;
+	import flash.display.Sprite;
+    import flash.events.Event;
+    import flash.events.MouseEvent;
+    import flash.filters.BitmapFilter;
+    import flash.filters.BitmapFilterQuality;
+    import flash.filters.GlowFilter;
+	import flash.display.Sprite;
+    import flash.events.Event;
+    import flash.events.MouseEvent;
+    import flash.filters.BitmapFilter;
+    import flash.filters.BitmapFilterQuality;
+    import flash.filters.DropShadowFilter;
+	import flash.net.LocalConnection;
+	import flash.events.StatusEvent;
+ 
+
+	public class KioskSwf extends MovieClip 
+	{		
+		var Xpos:Number = 20;
+		var Ypos:Number = 30;
+		var swf:MovieClip;
+		var loader:Loader = new Loader();
+		
+		
+		//构造函数
+		public function KioskSwf() 
+		{	
+			//trace("创建一个对象");
+		
+			var defaultSWF:URLRequest = new URLRequest("ttf/HelloWorld.swf");
+
+			loader.load(defaultSWF);
+			loader.x = Xpos;
+			loader.y = Ypos;
+			addChild(loader);
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			// Btn listeners
+			HelloWorld.addEventListener(MouseEvent.CLICK, btnClick);
+			SysLogin.addEventListener(MouseEvent.CLICK, btnClick);
+
+		}
+		
+		// Btns Universal function
+		function btnClick(event:MouseEvent):void 
+		{
+		trace("1sadfadf");
+		
+		removeChild(loader);
+		
+		var newSWFRequest:URLRequest = new URLRequest("ttf/" + event.target.name + ".swf");
+		loader.load(newSWFRequest);
+		loader.x = Xpos;
+    	loader.y = Ypos;
+		trace("11111111111111111111111");
+		addChild(loader);
+	}
+
+		
+		
+	}//end class
+}//end package

@@ -1,0 +1,17 @@
+script 脚本用法		
+		
+	<script type="text/javascript">	
+		(function (d) {
+		var ta=d.createElement("script");ta.type="text/javascript";ta.async=true;ta.id="tb-beacon";
+		ta.setAttribute("exparams","category=&userid=&tid=8091075f35e4e484f9f215c8d4f100d0&channel=112&at_alitrackid=www%2etaobao%2ecom&");
+		ta.src=("https:"==d.location.protocol?"https://s":"http://a")+".tbcdn.cn/s/atp.js";
+		d.getElementsByTagName("head")[0].appendChild(ta);
+		})(document);
+		</script>
+		
+		
+		
+		
+	function ietruebody() {	
+	  return (document.compatMode && document.compatMode != "BackCompat") ? document.documentElement : document.body;	
+	}

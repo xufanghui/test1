@@ -1,0 +1,101 @@
+select box '((1,1),(2,3))' + point '(3,7)';  // 对点和盒子进行加操作，也可以进行“-”，“*”，“/”操作
+select @-@ path '((2,3),(3,2))';   // 表示计算长度
+select @@ circle '((10,2),23)';  // 表示圆的中心点
+select point '(0,0)' ## lseg '((2,0),(0,2))';  // 输出点到三点最近的点
+select circle '((0,3),12)' <-> circle '((2,3),23)'; //两园的距离
+select circle '((0,3),12)' << circle '((1,3),10)'; // 圆（1,3）是否在圆（0,3）的左边，或是右边用">>"
+select circle '((0,3),12)' && circle '((1,3),10)';  // 是否封闭
+select circle '((2,3),23)' ~ point '(2,4)';   // 圆是否包括此点，结果为ture
+select point '(2,3)' @ circle '((1,3),4)'; // 点在圆的上方或里面，结果为true
+select polygon '((1,2),(0,0))' ~= polygon '((0,0),(1,2))';  // 两个多边形是否相等，结果为true
+select area(box '((2,3),(2,5))');  // 计算面积
+select center(box '((1,1),(3,3))');  // 计算中心点
+select diameter(circle '((2,2),3.0)');  // 计算直经
+select height(box '((1,1),(6,6))');   // 水平高度
+select isclosed(path '((1,1),(3,4))');  // 关闭路径。结果为true
+select isopen(path '((1,2),(3,4))');    // 是否打开。结果为false
+select npoints(path '[(1,2),(2,3),(6,7)]');   //线的点数
+select popen(path '((1,2),(2,3))');
+select pclose(path '[(2,2),(2,3),(3,4)]');
+select radius(circle '((1,1),3)');  // 计算圆的半径
+select width(box '((2,3),(5,6))');
+
+select polygon(box '((2,3),(3,4))') ~ point '(2.5,3.3)';
+
+postgis数据类型有：
+point(1 1)
+multipoint(1 1,2 2,3 3,4 4);
+linestring(1 1,2 2,3 4);
+polygon(0 0,0 1,1 1,1 0,0 0);
+multipolygon((0 1,1 0,0 1),(0 1,0 2,2 0,0 1));
+multilinestring((1 1,2 2,3 4),(2 2,3 3,4 5));
+multilinestringm((0 0 1,0 1 2,1 1 3),(-1 1 1,-1 -1 2));
+circularstring(0 0,2 0,2 2,0 2,0 0);  // 画半圆
+circularstring(2.5 2.5,4.5 2.5,4.5 4.5);  // 画弧度
+curvepolygon(circularstring(0 0,2 0,2 2,0 2,0 0));// 画曲线多边形
+
+select st_geomfromtext('circularstring(2.5 2.5,4.5 2.5,4.5 4.5)');  // 画曲线
+select st_npoints(st_geomfromtext('circularstring(2.5 2.5,4.5 2.5,4.5 4.5)')); // 统计点数
+
+select st_setsrid(st_point(-77.03547,35.89123),4326);
+select st_transform(st_setsrid(st_point(-77.08233,23.23412),4326),900913);
+create schema schema_name;
+select addgeometrycolumn('schema_name','表的名字','字段名字',初始srid值,'Geometry数据类型（point,path,ploygon等）',参数个数);
+
+
+select st_contains(st_geomfromtext('polygon((0 0,0 1,1 1,1 0,0 0))',-1),st_geomfromtext('point(0.5 0.5)',-1));  //  一个图形是否包括另一个图形，结果为t
+select st_contains(st_geomfromtext('polygon((0 0,0 1,1 1,1 0,0 0))',-1),st_geomfromtext('point(1 1)',-1));   // 结果为f
+select st_centroid('linestring(1 2,3 4,4 5)');   // 取得中心点
+select st_astext(st_centroid('linestring(2 3,4 5,6 7,1 9)'));  // result:"POINT(3.75615126275739 6.46309242345563)"
+
+格式转换函数：
+st_astext
+st_asgml
+st_assvg
+st_asgeojson
+st_askml
+st_geohash
+select st_geohash('point(1 1)');  // 哈希值为"s00twy01mtw037ms06g7"
+select st_geohash(st_geomastext('srid=900913;point(39.9042140 116.4074130)');
+select st_geohash('srid=900913;point(116.4074130 39.9042140)');   // 北京google坐标的哈希值为"wx4g0bm6ckdk3z4php6n"    ，其中 geohash.org值为wx4g0bm6ckdk，去掉了后面的8位
+
+
+st_polygon
+st_point
+st_linestring
+st_curvepolygon
+st_circulasstring
+st_multicurve
+
+select st_buffer(st_point(1,2),3);
+
+st_contains
+st_intersects
+st_covers
+st_containsproperly
+st_touches
+st_crosses
+st_equals
+st_orderingequals
+st_overlaps   //是否有重叠
+
+
+st_dwithin
+st_distance
+st_transform
+
+
+// 创建转换后的索引
+create index feature_data_utm 
+	on feature_data
+	using
+	gist(st_transform(the_geom,4326));
+create view vwfeature_data as
+	select gid,st_transform(the_geom,4326) from feature_data;
+
+
+
+CREATE OR REPLACE VIEW yangzhou_3km_result_ps_data_4326_test AS 
+  SELECT yangzhou_3km_result_ps_data.value, yangzhou_grid_3km_4326.the_geom, yangzhou_3km_result_ps_data.grid_id, yangzhou_ps_classification.name, yangzhou_ps_classification.type_id, yangzhou_3km_result_ps_data.lon_id, yangzhou_3km_result_ps_data.lat_id, yangzhou_3km_result_ps_data.pollutant_id, yangzhou_3km_result_ps_data.request_id
+   FROM yangzhou_ps_classification, yangzhou_3km_result_ps_data, yangzhou_grid_3km_4326
+  WHERE st_contains(yangzhou_grid_3km_4326.the_geom,st_point(yangzhou_3km_result_ps_data.lon_id,yangzhou_3km_result_ps_data.lat_id) ) ;

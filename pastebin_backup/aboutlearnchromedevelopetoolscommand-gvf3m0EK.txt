@@ -1,0 +1,23 @@
+API学习
+https://developers.google.com/chrome-developer-tools/docs/commandline-api?hl=zh-CN
+
+1.monitorEvents(document.body,"mousedown")   // 监视页面的mousedown动作
+
+2.$('a')
+$('#aa')
+$('.class1')
+
+3.$$('a#id1')
+$$('a.class1')
+
+4.$0,$1,$2
+
+5.google search [$('#lst-ib').value='as';$('.lsb').click();]
+
+6.dir($('a')[15])
+
+7.dirxml   // xml print out
+
+8.getEventListeners($('a')[15])
+
+9.keys($('a'))[0],values($('a'))[0]
